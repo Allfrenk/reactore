@@ -1,0 +1,16 @@
+🔥 Differenza TS vs TSX (breve e chiara)
+.tsx → File TypeScript che contengono JSX (quindi componenti React).
+Similitudine: come Angular ha i suoi template dentro i decorator, React li mette inline, quindi serve un’estensione che lo supporta.
+.ts → File TypeScript “puri”: logica, store, slice, utility.
+Similitudine: come i servizi Angular (.ts), senza HTML integrato.
+
+🔥 Perché Vite? (spiegazione richiesta)
+Te la includo dentro store.ts come mi hai chiesto, così ce l’hai già nel codice.
+In breve:
+Vite è un bundler ed un dev server super veloce, pensato per React moderno.
+Risolve i problemi di lentezza di Webpack (Create React App).
+Usa ES Modules nativi → parte in millisecondi.
+SWC (che hai scelto) è un compilatore scritto in Rust → più veloce di Babel.
+Similitudine:
+Se Webpack è come avviare un motore diesel vecchio che deve scaldarsi,
+Vite è una Tesla: accendi e parte.
