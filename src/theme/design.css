@@ -1,0 +1,18 @@
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --blur-glass: 20px;
+  --opacity-glass: 0.7;
+}
+
+/* Glass surface */
+.glass {
+  background-color: rgb(var(--color-bg) / var(--opacity-glass));
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+
+  border: 1px solid rgb(var(--color-border));
+  border-radius: var(--radius-md);
+}

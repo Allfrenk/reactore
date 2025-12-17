@@ -1,0 +1,21 @@
+/* Light theme (Apple-like) */
+:root {
+  --color-bg: 255 255 255;
+  --color-fg: 0 0 0;
+
+  --color-muted: 245 245 247;
+  --color-border: 210 210 215;
+
+  --color-primary: 0 122 255;
+}
+
+/* Dark theme (Apple-like) */
+.dark {
+  --color-bg: 0 0 0;
+  --color-fg: 255 255 255;
+
+  --color-muted: 28 28 30;
+  --color-border: 58 58 60;
+
+  --color-primary: 10 132 255;
+}
