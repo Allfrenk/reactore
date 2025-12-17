@@ -1,26 +1,41 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import UserCard from './components/UserCard'
-import { Route, Routes } from 'react-router-dom'
-import HooksPlaygroundPage from './pages/HooksPlaygroundPage'
-import HomePage from './pages/HomePage'
-import FeaturesPage from './pages/FeaturesPage'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { syncSystemTheme, toggleTheme } from '@/slices/themeSlice'
+import { useEffect } from 'react'
 
 function App() {
+  const dispatch = useAppDispatch()
+  const { mode, resolvedMode } = useAppSelector(s => s.theme)
+
+  useEffect(() => {
+    if (mode !== 'system') return
+
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const handler = () => dispatch(syncSystemTheme())
+
+    // compatibilità ampia
+    if (mq.addEventListener) mq.addEventListener('change', handler)
+    else mq.addListener(handler)
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', handler)
+      else mq.removeListener(handler)
+    }
+  }, [dispatch, mode])
+
   return (
-    <>
-      <div className="flex flex-row gap-1">
-        <img src={viteLogo} className="logo text-5xl" alt="Vite logo" />
-        <img src={reactLogo} className="logo react text-5xl" alt="React logo" />
-      </div>
-      <UserCard />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/hooks-demo" element={<HooksPlaygroundPage />} />
-        <Route path="/features-page" element={<FeaturesPage />} />
-      </Routes>
-    </>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-bg text-fg">
+      <div className="text-5xl">🌓</div>
+
+      <h1 className="text-2xl font-semibold">React 19 Starter</h1>
+
+      <button
+        type="button"
+        onClick={() => dispatch(toggleTheme())}
+        className="rounded-md border border-border bg-muted px-4 py-2 transition hover:opacity-80"
+      >
+        Theme: {mode} ({resolvedMode})
+      </button>
+    </div>
   )
 }
 

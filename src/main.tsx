@@ -1,10 +1,10 @@
 import React from 'react'
-import './index.css'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { store } from './app/store.ts'
-import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
+import App from './App.tsx'
+import { store } from './app/store.ts'
+import './index.css'
 
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
@@ -22,16 +22,7 @@ createRoot(document.getElementById('root')!).render(
   </React.StrictMode>
 )
 
-// OPPURE USANDO PIù STANDARD ReactDOM.render
-// ReactDOM.createRoot(document.getElementById("root")!).render(
-//   <React.StrictMode>
-//     <Provider store={store}>
-//       <App />
-//     </Provider>
-//   </React.StrictMode>
-// );
-
-/* 
+/*
 ------------------------------------------------------
 COMMENTI FINALI (SPIEGAZIONI)
 ------------------------------------------------------
