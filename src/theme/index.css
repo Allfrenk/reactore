@@ -6,3 +6,12 @@
 @import './base.css';
 @import './glass.css';
 @import './animations.css';
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

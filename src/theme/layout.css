@@ -4,13 +4,11 @@
   min-height: 100vh;
 }
 
-/* Header height fluida */
+/* Header */
 .app-header {
   height: clamp(56px, 6vw, 72px);
   display: flex;
   align-items: center;
-
-  /* padding orizzontale fluido */
   padding-inline: clamp(16px, 4vw, 32px);
 
   background: var(--bg-surface);
@@ -23,18 +21,15 @@
   min-height: 0;
 }
 
-/* Sidebar: non ancora responsive logicamente, ma pronta */
+/* Sidebar: SOLO stile, NO width */
 .app-sidebar {
-  width: clamp(200px, 22vw, 260px);
   background: var(--bg-surface);
   border-right: 1px solid var(--border-soft);
 }
 
+/* Main content */
 .app-content {
   flex: 1;
-
-  /* padding fluido, molto importante */
   padding: clamp(16px, 4vw, 40px);
-
   overflow-y: auto;
 }
