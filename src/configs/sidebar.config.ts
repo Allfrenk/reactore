@@ -15,7 +15,7 @@ export const sidebarConfig = [
     children: [
       {
         label: 'useState',
-        to: '/hooks/use-state',
+        to: '/hooks/useState',
       },
       // future:
       // { label: 'useEffect', to: '/hooks/use-effect' }

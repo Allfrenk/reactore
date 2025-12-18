@@ -1,5 +1,5 @@
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.08);
 
   /* blur leggermente fluido */
   --glass-blur: clamp(10px, 2vw, 14px);
@@ -10,24 +10,44 @@
   --glass-border: rgba(255, 255, 255, 0.35);
 
   --glass-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12), inset 0 0 18px 8px rgba(255, 255, 255, 0.65);
+    0 10px 30px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-
   border-radius: var(--glass-radius);
-  border: 1px solid var(--glass-border);
-
+  border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: var(--glass-shadow);
-
   position: relative;
   overflow: hidden;
-
   font-family: var(--font-mono);
   font-size: clamp(12px, 2.5vw, 13px);
   color: var(--text-secondary);
+  opacity: 0.95;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.02)
+  );
+  pointer-events: none;
 }
