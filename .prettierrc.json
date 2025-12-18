@@ -9,5 +9,6 @@
   "bracketSpacing": true,
   "endOfLine": "lf",
   "quoteProps": "as-needed",
-  "proseWrap": "preserve"
+  "proseWrap": "preserve",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
