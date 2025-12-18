@@ -36,8 +36,9 @@ export function ThemeToggleIcon() {
     >
       <i
         className={`
+          cursor-pointer
           fa-solid fa-circle-half-stroke
-          text-3xl
+          text-xl
           leading-none
           text-(--text-primary)
           transform-gpu
