@@ -1,21 +1,40 @@
-/* Light theme – Apple/OpenAI style */
+/* =========================
+   COLOR TOKENS
+   ========================= */
+
 :root {
-  --color-bg: 245 245 247; /* off-white Apple */
-  --color-fg: 17 24 39;
+  /* Backgrounds */
+  --bg-main: #f2f2f2;
+  --bg-surface: #ffffff;
 
-  --color-muted: 255 255 255;
-  --color-border: 220 220 224;
+  /* Text */
+  --text-primary: #323232;
+  --text-secondary: #6b6b6b;
+  --text-muted: #9a9a9a;
 
-  --color-primary: 0 122 255;
+  /* Borders */
+  --border-soft: rgba(0, 0, 0, 0.08);
+
+  /* Accent (Teenage Engineering) */
+  --accent-primary: #ff5c39;
+  --accent-hover: #ff3f1c;
+
+  /* Focus */
+  --focus-ring: rgba(255, 92, 57, 0.35);
 }
 
-/* Dark theme – Apple/OpenAI style */
 .dark {
-  --color-bg: 18 18 20; /* soft black */
-  --color-fg: 235 235 235;
+  --bg-main: #1c1c1c;
+  --bg-surface: #242424;
 
-  --color-muted: 28 28 30;
-  --color-border: 55 55 58;
+  --text-primary: #f2f2f2;
+  --text-secondary: #b4b4b4;
+  --text-muted: #8a8a8a;
 
-  --color-primary: 10 132 255;
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  --accent-primary: #ff5c39;
+  --accent-hover: #ff7a5c;
+
+  --focus-ring: rgba(255, 92, 57, 0.35);
 }

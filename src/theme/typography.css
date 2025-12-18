@@ -1,0 +1,5 @@
+:root {
+  --font-title: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}

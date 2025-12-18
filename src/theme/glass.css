@@ -1,0 +1,58 @@
+/* =========================
+   GLASS MATERIAL
+   ========================= */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: 14px;
+  --glass-radius: 20px;
+
+  --glass-border: rgba(255, 255, 255, 0.35);
+
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12), inset 0 0 18px 8px rgba(255, 255, 255, 0.65);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+
+  border-radius: var(--glass-radius);
+  border: 1px solid var(--glass-border);
+
+  box-shadow: var(--glass-shadow);
+
+  position: relative;
+  overflow: hidden;
+
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Specular highlights */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85),
+    transparent,
+    rgba(255, 255, 255, 0.35)
+  );
+}

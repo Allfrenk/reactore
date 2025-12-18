@@ -1,3 +1,14 @@
+:root {
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-medium: 250ms;
+}
+
+body {
+  transition: background-color 600ms var(--ease-standard),
+    color 600ms var(--ease-standard);
+}
+
 @keyframes spin-360 {
   from {
     transform: rotate(0deg);
@@ -9,4 +20,13 @@
 
 .animate-spin-360 {
   animation: spin-360 1s linear infinite;
+}
+
+.glass-card {
+  transition: box-shadow var(--duration-medium) var(--ease-standard);
+}
+
+.glass-card:hover {
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15);
 }

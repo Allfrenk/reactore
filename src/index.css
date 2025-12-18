@@ -1,14 +1,7 @@
 @import 'tailwindcss';
-@import './theme/index.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
+@import './theme/index.css';
 
 html {
   color-scheme: light dark;
-}
-
-body {
-  background-color: rgb(var(--color-bg));
-  color: rgb(var(--color-fg));
-
-  transition: background-color 600ms ease, color 600ms ease;
 }
