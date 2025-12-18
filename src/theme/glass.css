@@ -1,11 +1,11 @@
-/* =========================
-   GLASS MATERIAL
-   ========================= */
-
 :root {
   --glass-bg: rgba(255, 255, 255, 0.18);
-  --glass-blur: 14px;
-  --glass-radius: 20px;
+
+  /* blur leggermente fluido */
+  --glass-blur: clamp(10px, 2vw, 14px);
+
+  /* radius fluido */
+  --glass-radius: clamp(16px, 3vw, 20px);
 
   --glass-border: rgba(255, 255, 255, 0.35);
 
@@ -27,32 +27,6 @@
   overflow: hidden;
 
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: clamp(12px, 2.5vw, 13px);
   color: var(--text-secondary);
-}
-
-/* Specular highlights */
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 12px;
-  right: 12px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
-}
-
-.glass-card::after {
-  content: '';
-  position: absolute;
-  top: 12px;
-  bottom: 12px;
-  left: 0;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.85),
-    transparent,
-    rgba(255, 255, 255, 0.35)
-  );
 }
