@@ -1,35 +1,52 @@
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useAppDispatch } from '@/app/hooks'
 import { toggleTheme } from '@/slices/themeSlice'
 import { useState } from 'react'
 
+type FlipState = 'idle' | 'edge'
+
 export function ThemeToggleIcon() {
   const dispatch = useAppDispatch()
-  const resolvedMode = useAppSelector(state => state.theme.resolvedMode)
-
-  // angolo cumulativo → garantisce rotazione sempre oraria
-  const [rotation, setRotation] = useState(() => (resolvedMode === 'dark' ? 180 : 0))
+  const [flip, setFlip] = useState<FlipState>('idle')
 
   const handleToggle = () => {
-    setRotation(prev => prev + 180)
-    dispatch(toggleTheme())
+    // fase 1 → la moneta va "di taglio"
+    setFlip('edge')
+
+    // cambia tema mentre è di taglio (illusione perfetta)
+    setTimeout(() => {
+      dispatch(toggleTheme())
+    }, 120)
+
+    // fase 2 → torna frontale
+    setTimeout(() => {
+      setFlip('idle')
+    }, 260)
   }
 
   return (
-    <i
-      role="button"
+    <button
+      type="button"
       aria-label="Toggle theme"
       onClick={handleToggle}
-      style={{ transform: `rotate(${rotation}deg)` }}
       className="
-        fa-solid fa-circle-half-stroke
-        cursor-pointer
-        text-5xl
-        text-primary
-        transition-transform
-        duration-700
-        ease-in-out
+        flex h-10 w-10 items-center justify-center
         hover:opacity-80
+        transition-opacity duration-200
       "
-    />
+    >
+      <i
+        className={`
+          fa-solid fa-circle-half-stroke
+          text-3xl
+          leading-none
+          text-(--text-primary)
+          transform-gpu
+          transition-transform
+          duration-300
+          ease-[cubic-bezier(.34,1.56,.64,1)]
+          ${flip === 'edge' ? 'scale-x-[0.15] scale-y-110' : 'scale-x-100 scale-y-100'}
+        `}
+      />
+    </button>
   )
 }
