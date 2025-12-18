@@ -3,27 +3,44 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  /* Altezza fluida */
+  height: clamp(64px, 8vw, 88px);
+
+  /* Padding fluido */
+  padding-inline: clamp(16px, 4vw, 36px);
 }
 
+/* Click area icona + logo */
+.header-toggle {
+  gap: clamp(6px, 1.5vw, 12px);
+}
+
+/* Icona hamburger / X */
+.header-icon {
+  width: clamp(28px, 4vw, 36px);
+  height: clamp(28px, 4vw, 36px);
+}
+
+/* Logo */
 .header-title {
   font-family: var(--font-title);
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--text-primary);
 
-  /* titolo fluido */
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  /* Font fluido */
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
 }
 
+/* Right side */
 .header-right {
   display: flex;
   align-items: center;
-
-  /* gap fluido */
-  gap: clamp(8px, 2vw, 16px);
+  gap: clamp(8px, 2vw, 20px);
 }
 
 .header-user {
-  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  font-size: clamp(0.8rem, 2vw, 1rem);
   color: var(--text-secondary);
 }

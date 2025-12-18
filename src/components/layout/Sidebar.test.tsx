@@ -5,19 +5,40 @@ import { renderWithProviders } from '@/test/test-utils'
 import { Sidebar } from './Sidebar'
 
 describe('Sidebar', () => {
-  it('renders Home navigation link', () => {
+  it('renders Home and Hooks Playground section', () => {
     renderWithProviders(<Sidebar />)
 
-    const homeLink = screen.getByLabelText(/home/i)
-    expect(homeLink).toBeInTheDocument()
-  })
-})
-
-it('marks Home link as active when route is "/"', () => {
-  renderWithProviders(<Sidebar />, {
-    route: '/',
+    expect(screen.getByLabelText(/home/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/hooks playground/i)).toBeInTheDocument()
+    expect(screen.getByText(/hooks playground/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/usestate/i)).toBeInTheDocument()
   })
 
-  const homeLink = screen.getByLabelText(/home/i)
-  expect(homeLink.className).toContain('text-(--accent-primary)')
+  it('activates Code icon when a hooks child route is active', () => {
+    renderWithProviders(<Sidebar />, {
+      route: '/hooks/use-state',
+    })
+
+    const codeIcon = screen.getByLabelText(/hooks playground/i)
+    expect(codeIcon.className).toContain('bg-(--accent-primary)')
+    expect(codeIcon.className).toContain('text-(--accent-primary)')
+  })
+
+  it('highlights useState text when active', () => {
+    renderWithProviders(<Sidebar />, {
+      route: '/hooks/use-state',
+    })
+
+    const useStateLink = screen.getByLabelText(/usestate/i)
+    expect(useStateLink.className).toContain('text-(--accent-primary)')
+  })
+
+  it('does NOT highlight Hooks Playground title when a child is active', () => {
+    renderWithProviders(<Sidebar />, {
+      route: '/hooks/use-state',
+    })
+
+    const title = screen.getByText(/hooks playground/i)
+    expect(title.className).toContain('text-muted-foreground')
+  })
 })

@@ -15,20 +15,19 @@ describe('Header', () => {
     // username
     expect(screen.getByText(/ciao Alessandro/i)).toBeInTheDocument()
   })
-})
 
-it('toggles sidebar when logo is clicked', async () => {
-  const user = userEvent.setup()
+  it('toggles sidebar when header toggle is clicked', async () => {
+    const user = userEvent.setup()
 
-  const { store } = renderWithProviders(<Header />, {
-    preloadedState: {
-      layout: { sidebarOpen: false },
-    },
+    const { store } = renderWithProviders(<Header />, {
+      preloadedState: {
+        layout: { sidebarOpen: false },
+      },
+    })
+
+    const toggle = screen.getByLabelText(/toggle sidebar/i)
+    await user.click(toggle)
+
+    expect(store.getState().layout.sidebarOpen).toBe(true)
   })
-
-  const toggle = screen.getByLabelText(/toggle sidebar/i)
-  await user.click(toggle)
-
-  const state = store.getState()
-  expect(state.layout.sidebarOpen).toBe(true)
 })
