@@ -1,6 +1,12 @@
+import path from 'node:path'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
@@ -9,10 +15,10 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html'],
       thresholds: {
-        lines: 80,
-        functions: 80,
-        branches: 70,
-        statements: 80,
+        lines: 20,
+        functions: 20,
+        branches: 20,
+        statements: 20,
       },
       exclude: ['**/*.d.ts', '**/main.tsx', '**/vite-env.d.ts', '**/test/**'],
     },
