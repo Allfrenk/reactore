@@ -18,7 +18,7 @@ export function UseStateExplain() {
 
       <p>Using the functional form:</p>
 
-      <pre className="rounded-lg bg-black/5 p-3 text-xs">
+      <pre className="glass-inset p-3 text-xs">
         <code>{codeExample}</code>
       </pre>
 

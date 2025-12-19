@@ -19,14 +19,15 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
     const centerX = rect.width / 2
     const centerY = rect.height / 2
 
-    const rotateX = ((y - centerY) / centerY) * -4
-    const rotateY = ((x - centerX) / centerX) * 4
+    // 🔽 TILT RIDOTTO (prima era *4)
+    const rotateX = ((y - centerY) / centerY) * -1.5
+    const rotateY = ((x - centerX) / centerX) * 1.5
 
     el.style.transform = `
-      perspective(900px)
+      perspective(1000px)
       rotateX(${rotateX}deg)
       rotateY(${rotateY}deg)
-      translateY(-4px)
+      translateY(-2px)
     `
   }
 
@@ -35,7 +36,7 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
     if (!el) return
 
     el.style.transform = `
-      perspective(900px)
+      perspective(1000px)
       rotateX(0deg)
       rotateY(0deg)
       translateY(0)
@@ -47,7 +48,7 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={resetTransform}
-      className={`transition-transform duration-300 ease-out will-change-transform ${className} `}
+      className={`transition-transform duration-200 ease-out will-change-transform ${className}`}
     >
       {children}
     </div>
