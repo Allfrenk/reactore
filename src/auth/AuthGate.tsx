@@ -1,3 +1,4 @@
+import { PageFade } from '@/components/ui/pageFade/PageFade'
 import { useAuth } from '@/hooks/useAuth'
 import { LoginPage } from '@/pages/login/LoginPage'
 
@@ -23,7 +24,11 @@ export function AuthGate({ children }: AuthGateProps) {
   }
 
   if (!user) {
-    return <LoginPage />
+    return (
+      <PageFade slow>
+        <LoginPage />
+      </PageFade>
+    )
   }
 
   return <>{children}</>

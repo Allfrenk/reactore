@@ -37,19 +37,22 @@ export function Header() {
         </span>
       </button>
 
-      {/* RIGHT */}
       <div className="header-right flex items-center gap-3">
-        <ThemeToggleIcon />
-
+        {/* Nome sempre visibile */}
         {firstName && <span className="header-user">ciao {firstName}</span>}
 
-        <button
-          onClick={() => void logout()}
-          title="Logout"
-          className="opacity-70 transition hover:opacity-100"
-        >
-          <LogOut size={18} />
-        </button>
+        {/* Azioni SOLO desktop */}
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggleIcon />
+
+          <button
+            onClick={() => void logout()}
+            title="Logout"
+            className="opacity-70 transition hover:opacity-100"
+          >
+            <LogOut size={18} />
+          </button>
+        </div>
       </div>
     </div>
   )
