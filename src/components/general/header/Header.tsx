@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ThemeToggleIcon } from '@/components/general/themeToggle/ThemeToggleIcon'
+import { logout } from '@/lib/auth.actions'
 import { toggleSidebar } from '@/slices/layoutSlice'
-import { Menu, X } from 'lucide-react'
+import { LogOut, Menu, X } from 'lucide-react'
 
 export function Header() {
   const dispatch = useAppDispatch()
@@ -38,9 +39,20 @@ export function Header() {
       </button>
 
       {/* RIGHT */}
-      <div className="header-right">
+      {/* RIGHT */}
+      <div className="header-right flex items-center gap-3">
         <ThemeToggleIcon />
+
         <span className="header-user">ciao {userName}</span>
+
+        <button
+          type="button"
+          aria-label="Logout"
+          onClick={() => void logout()}
+          className="opacity-60 transition hover:opacity-100"
+        >
+          <LogOut size={16} />
+        </button>
       </div>
     </div>
   )
