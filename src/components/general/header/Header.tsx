@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { ThemeToggleIcon } from '@/components/themeToggle/ThemeToggleIcon'
+import { ThemeToggleIcon } from '@/components/general/themeToggle/ThemeToggleIcon'
 import { toggleSidebar } from '@/slices/layoutSlice'
 import { Menu, X } from 'lucide-react'
 
