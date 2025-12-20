@@ -1,9 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { ThemeToggleIcon } from '@/components/general/themeToggle/ThemeToggleIcon'
 import { sidebarConfig } from '@/configs/sidebar.config'
-import { logout } from '@/lib/auth.actions'
 import { closeSidebar } from '@/slices/layoutSlice'
-import { LogOut } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 export function Sidebar() {
@@ -90,23 +87,27 @@ export function Sidebar() {
           )
         })}
       </div>
-
-      {/* MOBILE FOOTER */}
-      <div className="mt-auto flex flex-col gap-3 md:hidden">
-        {/* Theme toggle */}
-        <div className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex h-12 w-12 items-center justify-center rounded-xl transition">
-          <ThemeToggleIcon />
-        </div>
-
-        {/* Logout */}
-        <button
-          onClick={() => void logout()}
-          className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex h-12 w-12 items-center justify-center rounded-xl transition"
-          aria-label="Logout"
-        >
-          <LogOut size={20} />
-        </button>
-      </div>
     </nav>
   )
+}
+
+{
+  /* MOBILE FOOTER */
+}
+{
+  ;<div className="mt-auto flex flex-col gap-3 md:hidden">
+    {/* Theme toggle */}
+    <div className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex h-12 w-12 items-center justify-center rounded-xl transition">
+      {/* <ThemeToggleIcon /> */}
+    </div>
+
+    {/* Logout */}
+    <button
+      // onClick={() => void logout()}
+      className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex h-12 w-12 items-center justify-center rounded-xl transition"
+      aria-label="Logout"
+    >
+      {/* <LogOut size={20} /> */}
+    </button>
+  </div>
 }

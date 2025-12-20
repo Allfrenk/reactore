@@ -30,9 +30,7 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
             )}
 
             <aside
-              className={`app-sidebar /* MOBILE */ fixed top-[clamp(56px,6vw,72px)] left-0 z-40 h-[calc(100vh-clamp(56px,6vw,72px))] w-[clamp(200px,55vw,240px)] overflow-hidden transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} /* DESKTOP */ md:static md:h-full md:translate-x-0 md:transition-[width,opacity] md:duration-300 md:ease-in-out ${
-                sidebarOpen ? 'md:w-[clamp(260px,28vw,300px)] lg:w-[320px]' : 'md:w-0'
-              } `}
+              className={`app-sidebar /* MOBILE */ fixed top-[clamp(56px,6vw,72px)] bottom-0 left-0 z-40 w-[clamp(200px,55vw,240px)] overflow-y-auto transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} /* DESKTOP */ md:static md:h-full md:translate-x-0 md:transition-[width,opacity] md:duration-300 md:ease-in-out ${sidebarOpen ? 'md:w-[clamp(260px,28vw,300px)] lg:w-[320px]' : 'md:w-0'} `}
             >
               {sidebar}
             </aside>

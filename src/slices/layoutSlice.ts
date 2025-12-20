@@ -5,7 +5,7 @@ type LayoutState = {
 }
 
 const initialState: LayoutState = {
-  sidebarOpen: true,
+  sidebarOpen: window.innerWidth >= 1024,
 }
 
 const layoutSlice = createSlice({
