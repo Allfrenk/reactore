@@ -10,7 +10,7 @@ export function Header() {
   const firstName = useAppSelector(state => state.user.firstName)
 
   return (
-    <div className="header-root">
+    <div className="header-root flex items-center justify-between">
       {/* LEFT */}
       <button
         type="button"
@@ -39,15 +39,14 @@ export function Header() {
 
       {/* RIGHT */}
       <div className="header-right flex items-center gap-3">
-        {/* Nome sempre visibile */}
         {firstName && <span className="header-user">ciao {firstName}</span>}
 
-        {/* Theme toggle SOLO desktop */}
+        {/* THEME TOGGLE — SOLO TABLET + DESKTOP */}
         <div className="hidden md:flex">
           <ThemeToggleIcon />
         </div>
 
-        {/* Logout SEMPRE visibile */}
+        {/* LOGOUT — sempre visibile */}
         <button
           onClick={() => void logout()}
           title="Logout"

@@ -14,7 +14,7 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
     const el = ref.current
     if (!el) return
 
-    // ❗ niente transition durante il movimento
+    // nessuna transition durante il movimento
     el.style.transition = 'none'
 
     const rect = el.getBoundingClientRect()
@@ -24,15 +24,14 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
     const centerX = rect.width / 2
     const centerY = rect.height / 2
 
-    // tilt leggero e controllato
-    const rotateX = ((y - centerY) / centerY) * -1.5
-    const rotateY = ((x - centerX) / centerX) * 1.5
+    // 🔽 TILT MOLTO RIDOTTO (anti-blur)
+    const rotateX = ((y - centerY) / centerY) * -0.8
+    const rotateY = ((x - centerX) / centerX) * 0.8
 
     el.style.transform = `
       perspective(1000px)
       rotateX(${rotateX}deg)
       rotateY(${rotateY}deg)
-      translateY(-2px)
     `
   }
 
@@ -41,12 +40,11 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
     if (!el) return
 
     // transition SOLO nel reset
-    el.style.transition = 'transform 200ms ease-out'
+    el.style.transition = 'transform 180ms ease-out'
     el.style.transform = `
       perspective(1000px)
       rotateX(0deg)
       rotateY(0deg)
-      translateY(0)
     `
   }
 
