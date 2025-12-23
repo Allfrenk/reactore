@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ThemeToggleIcon } from '@/components/general/themeToggle/ThemeToggleIcon'
-import { logout } from '@/lib/auth.actions'
+import { logout } from '@/lib/auth/auth.actions'
 import { toggleSidebar } from '@/slices/layoutSlice'
 import { LogOut, Menu, X } from 'lucide-react'
 

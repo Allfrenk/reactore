@@ -1,4 +1,4 @@
-import { loginWithGithub, loginWithGoogle } from '@/lib/auth.actions'
+import { loginWithGithub, loginWithGoogle } from '@/lib/auth/auth.actions'
 
 export function LoginPage() {
   return (

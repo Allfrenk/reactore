@@ -2,7 +2,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useEffect } from 'react'
 
 import { useAppDispatch } from '@/app/hooks'
-import { auth } from '@/lib/firebase'
+import { auth } from '@/lib/firebase/firebase'
 import { clearThemeSelected } from '@/slices/themeSlice'
 import { clearUser, setUserAuth } from '@/slices/userSlice'
 
