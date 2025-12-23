@@ -12,7 +12,7 @@ function App() {
       <AppShell header={<Header />} sidebar={<Sidebar />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/hooks/useState*" element={<UseStatePage />} />
+          <Route path="/hooks/useState/*" element={<UseStatePage />} />
         </Routes>
       </AppShell>
     </AuthGate>

@@ -1,7 +1,6 @@
 import { auth } from '@/lib/firebase/firebase'
-import { trackAnalyticsEvent } from '@/lib/telemetry/firebaseAnalytics'
 import { upsertUser } from '@/lib/users/users.repository'
-import { signInWithPopup, signOut } from 'firebase/auth'
+import { signInAnonymously, signInWithPopup, signOut } from 'firebase/auth'
 import { githubProvider, googleProvider } from './auth.providers'
 
 export const loginWithGoogle = async () => {
@@ -14,11 +13,6 @@ export const loginWithGoogle = async () => {
     email: user.email,
     role: 'user',
     provider: 'google',
-  })
-
-  await trackAnalyticsEvent('login', {
-    provider: 'google',
-    role: 'user',
   })
 
   return res
@@ -36,9 +30,19 @@ export const loginWithGithub = async () => {
     provider: 'github',
   })
 
-  await trackAnalyticsEvent('login', {
-    provider: 'github',
-    role: 'user',
+  return res
+}
+
+export const loginAsRecruiter = async () => {
+  const res = await signInAnonymously(auth)
+  const user = res.user
+
+  await upsertUser({
+    uid: user.uid,
+    name: 'Recruiter',
+    email: null,
+    role: 'recruiter',
+    provider: 'recruiter',
   })
 
   return res
