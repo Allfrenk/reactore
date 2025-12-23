@@ -39,9 +39,14 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
 
         {/* MAIN */}
         <main
+          onClick={() => {
+            if (sidebarOpen && window.innerWidth < 768) {
+              dispatch(closeSidebar())
+            }
+          }}
           className={`app-content no-scrollbar h-full flex-1 overflow-y-auto ${
             sidebarOpen ? 'overflow-hidden md:overflow-y-auto' : ''
-          } `}
+          }`}
         >
           {children}
         </main>
