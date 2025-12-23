@@ -1,26 +1,132 @@
-# Reactore
+🚀 Reactore
 
-🚀 Interactive React playground built with React 19
+Reactore is an interactive, modern React application designed as a learning playground, portfolio project, and experimental lab for advanced front-end patterns.
 
-🔗 Live app:
-https://reactore-7aea6.web.app
+The goal of Reactore is to explore React hooks, state management, UI/UX micro-interactions, and architecture best practices in a clean, production-grade environment.
 
-## Features
+🔗 Live App:
+👉 https://reactore-7aea6.web.app
 
-- React Hooks Playground
-- Firebase Auth (Google, GitHub, Recruiter access)
-- Firestore & Analytics
-- Responsive layout (mobile-first)
-- Modern UI / UX
+✨ Features
 
-## Tech Stack
+🔐 Authentication
 
-- React 19
-- TypeScript
-- Vite
-- TailwindCSS
-- Firebase (Auth, Firestore, Analytics)
+Google login
 
-## Status
+GitHub login
 
-🧪 Beta in progress
+Recruiter access (anonymous, protected by password)
+
+🧠 Hooks Playground
+
+Dedicated pages for hooks exploration
+
+Modular, scalable architecture
+
+🎨 Modern UI / UX
+
+Responsive layout (mobile / tablet / desktop)
+
+Dynamic sidebar
+
+Theme toggle (light / dark)
+
+Subtle 3D tilt effects
+
+🔥 Firebase Integration
+
+Authentication
+
+Firestore database
+
+Analytics (safe, client-side only)
+
+🧱 Solid Architecture
+
+Feature-based folder structure
+
+Clear separation of concerns
+
+Strong typing and predictable data flow
+
+🧩 Tech Stack
+
+React 19
+
+TypeScript
+
+Vite
+
+Redux Toolkit
+
+Tailwind CSS
+
+Firebase
+
+Auth
+
+Firestore
+
+Analytics
+
+Vitest / Testing Library
+
+🔐 Security Notes
+
+This project uses Firebase client-side configuration.
+
+Firebase API keys are public by design.
+Security is enforced through Firestore Security Rules and Firebase Authentication, not by hiding keys.
+
+Sensitive values (such as recruiter access) are handled via environment variables and are never committed to the repository.
+
+⚙️ Local Setup
+
+# install dependencies
+
+npm install
+
+# start dev server
+
+npm run dev
+
+Create a .env.local file based on:
+
+.env.example
+
+🌿 Branch Strategy
+
+alpha → frozen snapshot (closed)
+
+beta → active development branch
+
+main → stable / public release (coming soon)
+
+Only the repository owner can push to protected branches.
+
+📌 Project Status
+
+✅ Alpha completed and frozen
+
+🚧 Beta in progress
+
+🔜 Public release planned
+
+🧠 Author
+
+Built and maintained by Alessandro
+Front-End Developer with a focus on architecture, UX, and scalable React systems.
+
+📣 Notes
+
+This project is intentionally opinionated and structured to reflect real-world production standards, not tutorial shortcuts.
+
+Future updates may include:
+
+Additional hooks
+
+Interactive challenges
+
+Performance profiling
+
+Educational content
