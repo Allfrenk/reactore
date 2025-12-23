@@ -12,7 +12,7 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
   const sidebarOpen = useAppSelector(state => state.layout.sidebarOpen)
 
   return (
-    <div className="app-shell flex h-full w-full flex-col">
+    <div className="app-shell safe-bottom flex w-full flex-col">
       {/* HEADER */}
       <header className="app-header sticky top-0 z-50 shrink-0">{header}</header>
 

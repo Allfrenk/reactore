@@ -3,6 +3,14 @@ body,
 #root {
   width: 100%;
   height: 100%;
+  --app-height: 100vh;
+}
+
+/* Safari / browser moderni */
+@supports (height: 100dvh) {
+  :root {
+    --app-height: 100dvh;
+  }
 }
 
 body {
