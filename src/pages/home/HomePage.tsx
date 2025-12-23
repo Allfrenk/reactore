@@ -1,4 +1,4 @@
-import { PageFade } from '@/components/ui/pageFade/PageFade'
+import { PageFade } from '@/shared/components/ui/PageFade'
 
 export function HomePage() {
   return (

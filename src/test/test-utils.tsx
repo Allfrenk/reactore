@@ -5,8 +5,8 @@ import type { ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import layoutReducer from '@/slices/layoutSlice'
-import themeReducer from '@/slices/themeSlice'
+import layoutReducer from '@/state/layoutSlice'
+import themeReducer from '@/state/themeSlice'
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: {
