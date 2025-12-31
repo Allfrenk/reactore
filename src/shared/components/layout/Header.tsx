@@ -7,7 +7,9 @@ import { LogOut, Menu, X } from 'lucide-react'
 export function Header() {
   const dispatch = useAppDispatch()
   const sidebarOpen = useAppSelector(state => state.layout.sidebarOpen)
-  const firstName = useAppSelector(state => state.user.firstName)
+  const displayName = useAppSelector(state => state.user.user?.displayName)
+
+  const firstName = displayName?.split(' ')[0]
 
   return (
     <div className="header-root flex items-center justify-between">
