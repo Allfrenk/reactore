@@ -38,28 +38,29 @@ export function RoadmapSection() {
       {/* GRID ROOT */}
       <div className="relative grid grid-cols-[10%_90%] gap-y-10 md:grid-cols-[10%_30%_30%_30%]">
         {/* TIMELINE LINE */}
-        <div className="pointer-events-none absolute top-0 bottom-0 left-[5%] flex -translate-x-1/2 flex-col items-center">
+        <div className="pointer-events-none absolute -top-6 -bottom-6 left-[5%] flex -translate-x-1/2 flex-col items-center">
           {/* TOP DASHED */}
-          <div className="h-6 w-0.5 border-l-2 border-dashed border-white/30" />
+          <div className="h-8 border-l-2 border-dashed border-(--text-muted) opacity-60" />
 
           {/* SOLID */}
-          <div className="w-0.5 flex-1 bg-white/30" />
+          <div className="w-0.5 flex-1 bg-(--text-muted) opacity-60" />
 
           {/* BOTTOM DASHED */}
-          <div className="h-6 w-0.5 border-l-2 border-dashed border-white/30" />
+          <div className="h-8 border-l-2 border-dashed border-(--text-muted) opacity-60" />
         </div>
 
         {roadmap.map((item, index) => {
           const isFirst = index === 0
           const isLast = index === roadmap.length - 1
           return (
-            <div key={item.title} className="contents">
+            <div
+              key={item.title}
+              className={`contents ${
+                index === 0 ? 'pt-6' : ''
+              } ${index === roadmap.length - 1 ? 'pb-6' : ''}`}
+            >
               {/* DOT */}
-              <div
-                className={`col-start-1 flex justify-center ${
-                  isFirst ? 'mt-6' : ''
-                } ${isLast ? 'mb-6' : ''}`}
-              >
+              <div className={`col-start-1 flex justify-center`}>
                 <span className="relative z-10 mt-1 h-3 w-3 rounded-full bg-(--accent-primary)">
                   <span className="absolute -inset-1.5 rounded-full bg-[color-mix(in_srgb,var(--accent-primary)_20%,transparent)]" />
                 </span>

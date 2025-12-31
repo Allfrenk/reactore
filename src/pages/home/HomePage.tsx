@@ -21,7 +21,11 @@ export function HomePage() {
 
           {/* CTA */}
           <p className="hero-cta">
-            Start from <span>useState</span> →
+            Start from{' '}
+            <a href="/hooks/useState" className="hero-cta-link">
+              useState
+            </a>{' '}
+            →
           </p>
         </section>
 
@@ -31,11 +35,17 @@ export function HomePage() {
         </div>
       </main>
 
-      {/* LOCAL CSS TOKENS */}
       <style>{`
         .home-root {
           display: flex;
           flex-direction: column;
+          padding-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+          .home-root {
+            padding-bottom: 6rem;
+          }
         }
 
         /* HERO */
@@ -48,7 +58,7 @@ export function HomePage() {
           max-width: 56rem;
           font-weight: 600;
           line-height: 1.1;
-          font-size: clamp(2.6rem, 4.8vw, 3.7rem);
+          font-size: clamp(3rem, 5vw, 4rem);
         }
 
         .hero-desc {
@@ -66,9 +76,14 @@ export function HomePage() {
           color: hsl(var(--muted-foreground));
         }
 
-        .hero-cta span {
+        .hero-cta-link {
           text-decoration: underline;
           cursor: pointer;
+          color: inherit;
+        }
+
+        .hero-cta-link:hover {
+          color: var(--accent-primary);
         }
 
         /* ROADMAP SPACING */
@@ -87,10 +102,7 @@ export function HomePage() {
           color: var(--accent-primary);
         }
 
-        /* =========================
-           INLINE BETA — GLASS REFINED
-           ========================= */
-
+        /* BETA BADGE */
         .beta-inline {
           display: inline-flex;
           align-items: center;
