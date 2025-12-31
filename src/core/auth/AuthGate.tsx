@@ -10,7 +10,6 @@ export function AuthGate({ children }: AuthGateProps) {
   const { user, loading } = useAuth()
   const AUTH_BYPASS = false
 
-  // bypass per sviluppo
   if (AUTH_BYPASS) {
     return <>{children}</>
   }
