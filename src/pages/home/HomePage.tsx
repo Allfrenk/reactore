@@ -1,25 +1,26 @@
+import { WhyReactoreCard } from '@/shared/components/cards/WhyReactoreCard'
 import { RoadmapSection } from '@/shared/components/general/RoadmapSection'
+import { FadeUp } from '@/shared/components/ui/FadeUp'
 import { PageFade } from '@/shared/components/ui/PageFade'
+import { TiltCardWrapper } from '@/shared/components/ui/TiltCardWrapper'
 
 export function HomePage() {
   return (
     <PageFade>
       <main className="home-root">
+        {/* HERO */}
         <section className="hero">
-          {/* CLAIM + BETA INLINE */}
           <h1 className="hero-title">
             A didactic <span className="hero-accent">React</span> project built for{' '}
             <span className="hero-accent">portfolio</span> and real understanding
             <span className="beta-inline">BETA</span>
           </h1>
 
-          {/* DESCRIPTION */}
           <p className="hero-desc">
             Reactore is an evolving React application designed to explain hooks and
             patterns through clear mental models and practical examples.
           </p>
 
-          {/* CTA */}
           <p className="hero-cta">
             Start from{' '}
             <a href="/hooks/useState" className="hero-cta-link">
@@ -30,11 +31,23 @@ export function HomePage() {
         </section>
 
         {/* ROADMAP */}
-        <div className="roadmap-wrapper">
-          <RoadmapSection />
-        </div>
+        <section className="roadmap-wrapper">
+          <FadeUp velocity="normal" direction="up">
+            <RoadmapSection />
+          </FadeUp>
+        </section>
+
+        {/* WHY REACTORE */}
+        <section className="why-reactore-wrapper">
+          <FadeUp velocity="slow" direction="up" delay={200}>
+            <TiltCardWrapper>
+              <WhyReactoreCard />
+            </TiltCardWrapper>
+          </FadeUp>
+        </section>
       </main>
 
+      {/* LOCAL STYLES */}
       <style>{`
         .home-root {
           display: flex;
@@ -68,9 +81,8 @@ export function HomePage() {
           color: hsl(var(--muted-foreground));
         }
 
-        /* CTA */
         .hero-cta {
-          margin-top: 1.6rem;
+          margin-top: 1.4rem;
           font-family: var(--font-mono);
           font-size: 0.95rem;
           color: hsl(var(--muted-foreground));
@@ -86,14 +98,27 @@ export function HomePage() {
           color: var(--accent-primary);
         }
 
-        /* ROADMAP SPACING */
+        /* ROADMAP */
         .roadmap-wrapper {
-          margin-top: 5rem;
+          margin-top: 3.2rem;
         }
 
         @media (min-width: 768px) {
           .roadmap-wrapper {
-            margin-top: 7rem;
+            margin-top: 4rem;
+          }
+        }
+
+        /* WHY REACTORE */
+        .why-reactore-wrapper {
+          margin-top: 3.2rem;
+          max-width: 42rem;
+          margin-inline: auto;
+        }
+
+        @media (min-width: 768px) {
+          .why-reactore-wrapper {
+            margin-top: 2.8rem;
           }
         }
 
