@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
+import { useSidebarSwipe } from '@/shared/hooks/useSidebarSwipe'
 import { closeSidebar } from '@/state/layoutSlice'
 
 type AppShellProps = {
@@ -10,6 +11,9 @@ type AppShellProps = {
 export function AppShell({ header, sidebar, children }: AppShellProps) {
   const dispatch = useAppDispatch()
   const sidebarOpen = useAppSelector(state => state.layout.sidebarOpen)
+
+  // 👈 gesture swipe open / close sidebar (mobile only)
+  useSidebarSwipe()
 
   return (
     <div className="app-shell safe-bottom flex w-full flex-col">
@@ -30,23 +34,23 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
             )}
 
             <aside
-              className={`app-sidebar /* MOBILE */ fixed top-[clamp(56px,6vw,72px)] bottom-0 left-0 z-40 w-[clamp(200px,55vw,240px)] overflow-y-auto transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} /* DESKTOP */ md:static md:h-full md:translate-x-0 md:transition-[width,opacity] md:duration-300 md:ease-in-out ${sidebarOpen ? 'md:w-[clamp(260px,28vw,300px)] lg:w-[320px]' : 'md:w-0'} `}
+              className={`app-sidebar fixed top-[clamp(56px,6vw,72px)] bottom-0 left-0 z-40 w-[clamp(200px,55vw,240px)] overflow-y-auto transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:static md:h-full md:translate-x-0 md:transition-[width,opacity] md:duration-300 md:ease-in-out ${
+                sidebarOpen ? 'md:w-[clamp(260px,28vw,300px)] lg:w-[320px]' : 'md:w-0'
+              } `}
             >
               {sidebar}
             </aside>
           </>
         )}
 
-        {/* MAIN */}
+        {/* MAIN CONTENT */}
         <main
           onClick={() => {
             if (sidebarOpen && window.innerWidth < 768) {
               dispatch(closeSidebar())
             }
           }}
-          className={`app-content no-scrollbar h-full flex-1 overflow-y-auto ${
-            sidebarOpen ? 'overflow-hidden md:overflow-y-auto' : ''
-          }`}
+          className={`app-content no-scrollbar flex-1 overflow-y-auto ${sidebarOpen ? 'overflow-hidden md:overflow-y-auto' : ''} `}
         >
           {children}
         </main>

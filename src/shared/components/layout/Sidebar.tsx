@@ -9,88 +9,73 @@ export function Sidebar() {
   const dispatch = useAppDispatch()
 
   const handleNavigate = () => {
-    if (window.innerWidth < 768) {
-      dispatch(closeSidebar())
-    }
+    if (window.innerWidth < 768) dispatch(closeSidebar())
   }
+
+  const iconButtonClass = (active: boolean) =>
+    `flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-colors ${
+      active
+        ? 'bg-(--accent-primary)/15 text-(--accent-primary)'
+        : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+    }`
+
+  const labelClass =
+    `absolute left-[60px] text-sm font-medium whitespace-nowrap transition-opacity duration-200 ` +
+    (sidebarOpen ? 'opacity-100' : 'opacity-0')
+
+  const childLinkBase =
+    `ml-[60px] py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ` +
+    (sidebarOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0')
 
   return (
     <nav className="flex h-full w-full flex-col gap-6 p-4">
       <div className="flex flex-col gap-6">
         {sidebarConfig.map(entry => {
-          /* ---------- SINGLE ITEM (Home) ---------- */
-          if (entry.type === 'item') {
-            const Icon = entry.icon
-
-            return (
-              <NavLink
-                key={entry.to}
-                to={entry.to}
-                aria-label={entry.label}
-                onClick={handleNavigate}
-                className={({ isActive }) =>
-                  `flex h-12 w-12 items-center justify-center rounded-xl transition-colors ${
-                    isActive
-                      ? 'bg-(--accent-primary)/15 text-(--accent-primary)'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
-                  }`
-                }
-              >
-                <Icon size={22} strokeWidth={1.75} />
-              </NavLink>
-            )
-          }
-
-          /* ---------- GROUP ITEM (Hooks Playground) ---------- */
           const Icon = entry.icon
-          const groupActive = pathname.startsWith(entry.basePath)
+
+          // ACTIVE STATE
+          const isActive =
+            entry.type === 'item'
+              ? pathname === entry.to
+              : pathname.startsWith(entry.basePath)
 
           return (
             <div key={entry.label} className="relative flex flex-col gap-2">
-              {/* GROUP HEADER */}
-              <div className="relative flex h-12 items-center">
-                {/* ICON — colonna fissa */}
-                <div
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-colors ${
-                    groupActive
-                      ? 'bg-(--accent-primary)/15 text-(--accent-primary)'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
-                  }`}
-                >
+              {/* HEADER (ITEM o GROUP) */}
+              <NavLink
+                to={entry.type === 'group' ? entry.to : entry.to}
+                onClick={handleNavigate}
+                className="relative flex h-12 items-center"
+              >
+                <div className={iconButtonClass(isActive)}>
                   <Icon size={22} strokeWidth={1.75} />
                 </div>
 
-                {/* LABEL — fuori dal flow */}
-                <span
-                  className={`absolute left-[60px] text-sm font-medium whitespace-nowrap transition-opacity duration-200 ${
-                    sidebarOpen ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  {entry.label}
-                </span>
-              </div>
+                <span className={labelClass}>{entry.label}</span>
+              </NavLink>
 
-              {/* CHILDREN */}
-              {entry.children.map(child => (
-                <NavLink
-                  key={child.to}
-                  to={child.to}
-                  onClick={handleNavigate}
-                  className={({ isActive }) =>
-                    `ml-[60px] py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ${
-                      sidebarOpen
-                        ? 'pointer-events-auto opacity-100'
-                        : 'pointer-events-none opacity-0'
-                    } ${
-                      isActive
-                        ? 'text-(--accent-primary)'
-                        : 'text-muted-foreground hover:text-foreground'
-                    }`
-                  }
-                >
-                  {child.label}
-                </NavLink>
-              ))}
+              {/* CHILDREN (solo se group) */}
+              {entry.type === 'group' &&
+                entry.children.map(child => (
+                  <NavLink
+                    key={child.to}
+                    to={child.to}
+                    onClick={handleNavigate}
+                    className={({ isActive }) =>
+                      `ml-[60px] py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ${
+                        sidebarOpen
+                          ? 'pointer-events-auto opacity-100'
+                          : 'pointer-events-none opacity-0'
+                      } ${
+                        isActive
+                          ? 'text-(--accent-primary)'
+                          : 'text-muted-foreground hover:text-foreground'
+                      }`
+                    }
+                  >
+                    {child.label}
+                  </NavLink>
+                ))}
             </div>
           )
         })}

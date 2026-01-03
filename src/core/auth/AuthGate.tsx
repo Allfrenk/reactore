@@ -14,7 +14,7 @@ export function AuthGate({ children }: AuthGateProps) {
     return <>{children}</>
   }
 
-  if (loading) {
+  if (loading && !user) {
     return (
       <div className="flex h-screen items-center justify-center">
         <p className="text-muted-foreground">Checking authentication…</p>

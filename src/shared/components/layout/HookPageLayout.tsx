@@ -28,6 +28,13 @@ export function HookPageLayout({
           display: flex;
           flex-direction: column;
           gap: 2rem;
+          padding-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+          .hook-page-root {
+            padding-bottom: 6rem;
+          }
         }
 
         .hook-page-header {
