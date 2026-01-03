@@ -43,7 +43,7 @@ export function RoadmapSection() {
           <div className="h-8 border-l-2 border-dashed border-(--text-muted) opacity-60" />
 
           {/* SOLID */}
-          <div className="w-0.5 flex-1 bg-(--text-muted) opacity-60" />
+          <div className="flex-1 border-l-2 border-solid border-(--text-muted) opacity-60" />
 
           {/* BOTTOM DASHED */}
           <div className="h-8 border-l-2 border-dashed border-(--text-muted) opacity-60" />
