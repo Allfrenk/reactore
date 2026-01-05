@@ -1,3 +1,4 @@
+import hooksReducer from '@/state/hooksSlice'
 import layoutReducer from '@/state/layoutSlice'
 import themeReducer from '@/state/themeSlice'
 import userReducer from '@/state/userSlice'
@@ -9,6 +10,7 @@ export const store = configureStore({
     layout: layoutReducer,
     theme: themeReducer,
     user: userReducer,
+    hooks: hooksReducer,
   },
 })
 

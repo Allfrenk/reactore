@@ -9,7 +9,7 @@ export const loginWithGoogle = async () => {
 
   await upsertUser({
     uid: user.uid,
-    name: user.displayName ?? 'User',
+    displayName: user.displayName ?? 'User',
     email: user.email,
     role: 'user',
     provider: 'google',
@@ -24,7 +24,7 @@ export const loginWithGithub = async () => {
 
   await upsertUser({
     uid: user.uid,
-    name: user.displayName ?? 'User',
+    displayName: user.displayName ?? 'User',
     email: user.email,
     role: 'user',
     provider: 'github',
@@ -39,7 +39,7 @@ export const loginAsRecruiter = async () => {
 
   await upsertUser({
     uid: user.uid,
-    name: 'Recruiter',
+    displayName: 'Recruiter',
     email: null,
     role: 'recruiter',
     provider: 'recruiter',

@@ -4,6 +4,8 @@ import { useEffect, useRef } from 'react'
 import { useAppDispatch } from '@/core/app/hooks'
 import { trackAnalyticsEvent } from '@/core/firebase/analytics'
 import { auth } from '@/core/firebase/firebase'
+import { getUserHooks } from '@/features/users/users.repository'
+import { hydrateHooks } from '@/state/hooksSlice'
 import { clearThemeSelected } from '@/state/themeSlice'
 import { clearUser, setAuthReady, setUserAuth } from '@/state/userSlice'
 
@@ -16,6 +18,14 @@ export function AuthBootstrap({ children }: AuthBootstrapProps) {
   const loginTrackedRef = useRef(false)
 
   useEffect(() => {
+    // ✅ funzione async ESPLICITA (niente IIFE, niente hack)
+    const hydrateUserHooks = async (uid: string) => {
+      const hooks = await getUserHooks(uid)
+      if (hooks) {
+        dispatch(hydrateHooks(hooks))
+      }
+    }
+
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
         dispatch(
@@ -25,6 +35,8 @@ export function AuthBootstrap({ children }: AuthBootstrapProps) {
           })
         )
 
+        // 🔁 Hydration Firestore → Redux (fire & forget, ma esplicito)
+        void hydrateUserHooks(user.uid)
         if (!loginTrackedRef.current) {
           loginTrackedRef.current = true
 
