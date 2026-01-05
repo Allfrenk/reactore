@@ -36,6 +36,7 @@ export const sidebarConfig: Array<SidebarItem | SidebarGroup> = [
     children: [
       { label: 'useState', to: '/hooks/useState' },
       { label: 'useEffect', to: '/hooks/useEffect' },
+      { label: 'useMemo', to: '/hooks/useMemo' },
     ],
   },
 ] as const

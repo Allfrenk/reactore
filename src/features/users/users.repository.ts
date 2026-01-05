@@ -1,6 +1,7 @@
 import { db } from '@/core/firebase/firebase'
-import type { HooksState } from '@/state/hooksSlice'
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
+
+import type { HooksState } from '@/state/hooksSlice'
 import { createUserRecord } from './users.schema'
 import type { AuthProvider, UserRole } from './users.types'
 
@@ -29,21 +30,15 @@ export async function upsertUser(params: UpsertUserParams) {
   })
 }
 
+// ✅ già ok: la tua getUserHooks tipizzata/normalizzata resta
 export async function getUserHooks(uid: string): Promise<HooksState['data'] | null> {
   const ref = doc(db, 'users', uid)
   const snap = await getDoc(ref)
 
-  if (!snap.exists()) {
-    return null
-  }
+  if (!snap.exists()) return null
 
-  // 🔐 boundary Firestore → unknown
   const raw = snap.data().hooks as unknown
-
-  // 🔎 runtime check minimo
-  if (typeof raw !== 'object' || raw === null) {
-    return null
-  }
+  if (typeof raw !== 'object' || raw === null) return null
 
   const hooks = raw as Partial<HooksState['data']>
 
@@ -53,4 +48,14 @@ export async function getUserHooks(uid: string): Promise<HooksState['data'] | nu
     useMemo: hooks.useMemo ?? { value: '0' },
     useCallback: hooks.useCallback ?? { value: '0' },
   }
+}
+
+// ✅ NUOVA: persiste TUTTI gli hooks nello user doc
+export async function updateUserHooks(uid: string, hooks: HooksState['data']) {
+  const ref = doc(db, 'users', uid)
+
+  await updateDoc(ref, {
+    hooks,
+    lastLoginAt: serverTimestamp(),
+  })
 }
