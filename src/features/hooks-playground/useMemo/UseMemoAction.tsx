@@ -79,8 +79,6 @@ export function UseMemoAction() {
   const decrement = () =>
     dispatch(updateHookValue({ hook: 'useMemo', value: String(Math.max(0, value - 1)) }))
 
-  const reset = () => dispatch(updateHookValue({ hook: 'useMemo', value: '0' }))
-
   const toggleMemo = () => {
     setUseMemoEnabled(v => !v)
     triggerRenderPulse()
@@ -92,33 +90,33 @@ export function UseMemoAction() {
 
   return (
     <ActionCard title={title} subtitle={subtitle}>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-7">
         {/* STEP 1 — INPUT */}
         <div className="flex flex-col gap-3">
           <span className="text-sm font-medium">1. Choose an input</span>
 
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-4">
             <button
               onClick={decrement}
               disabled={value === 0}
-              className="hover:bg-muted rounded-xl border px-4 py-2 text-sm transition disabled:opacity-40"
+              className="hover:bg-muted rounded-xl border px-7 py-4 text-xl font-semibold transition disabled:opacity-40"
             >
               −
             </button>
 
-            <div className="min-w-20 text-center text-4xl font-semibold tabular-nums">
+            <div className="min-w-24 text-center text-6xl font-semibold tabular-nums">
               {value}
             </div>
 
             <button
               onClick={increment}
-              className="rounded-xl bg-(--accent-primary) px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
+              className="rounded-xl bg-(--accent-primary) px-7 py-4 text-xl font-semibold text-white transition hover:opacity-90"
             >
               +
             </button>
           </div>
 
-          <p className="text-muted-foreground text-center text-xs">
+          <p className="text-muted-foreground text-center text-sm">
             Changing this always triggers a <strong>recalculation</strong>.
           </p>
         </div>
@@ -130,7 +128,7 @@ export function UseMemoAction() {
 
             <button
               onClick={toggleMemo}
-              className={`rounded-md px-4 py-1 text-sm font-medium transition ${
+              className={`rounded-md px-5 py-2 text-sm font-medium transition ${
                 useMemoEnabled
                   ? 'bg-(--accent-primary) text-white'
                   : 'text-muted-foreground border hover:bg-(--accent-primary)/10'
@@ -140,10 +138,10 @@ export function UseMemoAction() {
             </button>
           </div>
 
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-sm">
             {useMemoEnabled
-              ? 'Caching enabled: result reused if input is unchanged.'
-              : 'Caching disabled: every render recomputes the result.'}
+              ? 'Caching enabled: the computation is reused if the input does not change.'
+              : 'Caching disabled: the computation runs again on every render.'}
           </p>
         </div>
 
@@ -152,7 +150,7 @@ export function UseMemoAction() {
           <span className="text-sm font-medium">Result</span>
 
           <div
-            className={`rounded-full border px-3 py-1 text-xs transition-all duration-550 ${
+            className={`rounded-full border px-4 py-1.5 text-sm transition-all duration-550 ${
               renderPulse
                 ? 'scale-105 border-(--accent-primary) text-(--accent-primary)'
                 : 'text-muted-foreground scale-100'
@@ -162,15 +160,16 @@ export function UseMemoAction() {
           </div>
 
           <div
-            className={`w-full max-w-[420px] rounded-2xl border p-4 text-center transition-all duration-550 ${
+            className={`w-full max-w-[440px] rounded-2xl border p-5 text-center transition-all duration-550 ${
               computePulse
-                ? 'border-(--accent-primary)/60 shadow-[0_0_20px_var(--accent-primary)/30]'
+                ? 'border-(--accent-primary)/60 shadow-[0_0_22px_var(--accent-primary)/30]'
                 : 'border-current/20'
             }`}
           >
-            <div className="text-muted-foreground text-xs">Computed result</div>
+            <div className="text-muted-foreground text-sm">Computed result</div>
+
             <div
-              className={`mt-1 font-mono text-3xl transition-all duration-550 ${
+              className={`mt-2 font-mono text-4xl transition-all duration-550 ${
                 computePulse ? 'scale-110 text-(--accent-primary)' : 'scale-100'
               }`}
             >
@@ -178,24 +177,24 @@ export function UseMemoAction() {
             </div>
           </div>
 
-          <p className="text-muted-foreground max-w-md text-center text-xs">
+          <p className="text-muted-foreground max-w-md text-center text-sm">
             {useMemoEnabled
-              ? 'Trigger a re-render: render changes, result does NOT.'
-              : 'Trigger a re-render: render AND result both change.'}
+              ? 'Trigger a re-render: the render count changes, but the result does NOT.'
+              : 'Trigger a re-render: both render count and result change.'}
           </p>
 
           <button
             onClick={triggerUnrelated}
-            className="mt-2 w-full max-w-[420px] rounded-xl border px-4 py-2 text-sm transition hover:bg-(--accent-primary)/10"
+            className="mt-2 w-full max-w-[440px] rounded-xl border px-5 py-3 text-sm transition hover:bg-(--accent-primary)/10"
           >
             Trigger a re-render (unrelated) ({unrelated})
           </button>
         </div>
 
         {/* STEP 4 — KEY IDEA */}
-        <p className="text-muted-foreground text-center text-xs">
-          <strong>Key idea:</strong> useMemo doesn’t stop re-renders — it stops
-          unnecessary recalculations.
+        <p className="text-muted-foreground text-center text-sm">
+          <strong>Key idea:</strong> useMemo does not prevent re-renders — it prevents
+          unnecessary computations.
         </p>
       </div>
     </ActionCard>

@@ -28,13 +28,10 @@ export function UseEffectAction() {
       )
     }, 1000)
 
-    return () => {
-      clearInterval(intervalId)
-    }
+    return () => clearInterval(intervalId)
   }, [isRunning, time, dispatch])
 
   const start = () => setIsRunning(true)
-
   const stop = () => setIsRunning(false)
 
   const reset = () => {
@@ -49,19 +46,19 @@ export function UseEffectAction() {
 
   return (
     <ActionCard title={title} subtitle={subtitle}>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-7">
         {/* TIMER */}
         <div className="text-center">
-          <div className="text-5xl font-semibold tabular-nums">{time}s</div>
+          <div className="text-6xl font-semibold tabular-nums">{time}s</div>
           <p className="text-muted-foreground mt-1 text-sm">Elapsed time</p>
         </div>
 
         {/* CONTROLS */}
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-4">
           <button
             onClick={start}
             disabled={isRunning}
-            className="rounded-xl bg-(--accent-primary) px-5 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-40"
+            className="rounded-xl bg-(--accent-primary) px-7 py-4 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-40"
           >
             Start
           </button>
@@ -69,21 +66,21 @@ export function UseEffectAction() {
           <button
             onClick={stop}
             disabled={!isRunning}
-            className="hover:bg-muted rounded-xl border px-4 py-2 text-sm transition disabled:opacity-40"
+            className="hover:bg-muted rounded-xl border px-6 py-4 text-sm transition disabled:opacity-40"
           >
             Stop
           </button>
 
           <button
             onClick={reset}
-            className="hover:bg-muted rounded-xl border px-4 py-2 text-sm transition"
+            className="hover:bg-muted rounded-xl border px-6 py-4 text-sm transition"
           >
             Reset
           </button>
         </div>
 
         {/* STATUS */}
-        <p className="text-muted-foreground text-center text-xs">
+        <p className="text-muted-foreground text-center text-sm">
           Status: <span className="font-mono">{isRunning ? 'running' : 'stopped'}</span>
         </p>
       </div>

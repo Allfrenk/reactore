@@ -23,17 +23,11 @@ export function Sidebar() {
     `absolute left-[60px] text-sm font-medium whitespace-nowrap transition-opacity duration-200 ` +
     (sidebarOpen ? 'opacity-100' : 'opacity-0')
 
-  const childLinkBase =
-    `ml-[60px] py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ` +
-    (sidebarOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0')
-
   return (
     <nav className="flex h-full w-full flex-col gap-6 p-4">
       <div className="flex flex-col gap-6">
         {sidebarConfig.map(entry => {
           const Icon = entry.icon
-
-          // ACTIVE STATE
           const isActive =
             entry.type === 'item'
               ? pathname === entry.to
@@ -41,9 +35,8 @@ export function Sidebar() {
 
           return (
             <div key={entry.label} className="relative flex flex-col gap-2">
-              {/* HEADER (ITEM o GROUP) */}
               <NavLink
-                to={entry.type === 'group' ? entry.to : entry.to}
+                to={entry.to}
                 onClick={handleNavigate}
                 className="relative flex h-12 items-center"
               >
@@ -54,7 +47,6 @@ export function Sidebar() {
                 <span className={labelClass}>{entry.label}</span>
               </NavLink>
 
-              {/* CHILDREN (solo se group) */}
               {entry.type === 'group' &&
                 entry.children.map(child => (
                   <NavLink
@@ -62,7 +54,7 @@ export function Sidebar() {
                     to={child.to}
                     onClick={handleNavigate}
                     className={({ isActive }) =>
-                      `ml-[60px] py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ${
+                      `ml-[60px] flex items-center gap-2 py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ${
                         sidebarOpen
                           ? 'pointer-events-auto opacity-100'
                           : 'pointer-events-none opacity-0'
@@ -73,7 +65,11 @@ export function Sidebar() {
                       }`
                     }
                   >
-                    {child.label}
+                    <span>{child.label}</span>
+
+                    {child.badge === 'new' && (
+                      <span className="app-badge app-badge--new">NEW</span>
+                    )}
                   </NavLink>
                 ))}
             </div>

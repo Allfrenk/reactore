@@ -17,6 +17,7 @@ type SidebarGroup = {
   children: Array<{
     label: string
     to: string
+    badge?: string
   }>
 }
 
@@ -36,7 +37,8 @@ export const sidebarConfig: Array<SidebarItem | SidebarGroup> = [
     children: [
       { label: 'useState', to: '/hooks/useState' },
       { label: 'useEffect', to: '/hooks/useEffect' },
-      { label: 'useMemo', to: '/hooks/useMemo' },
+      { label: 'useMemo', to: '/hooks/useMemo', badge: 'new' },
+      { label: 'useCallback', to: '/hooks/useCallback', badge: 'new' },
     ],
   },
 ] as const
