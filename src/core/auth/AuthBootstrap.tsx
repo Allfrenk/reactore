@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react'
 import { useAppDispatch } from '@/core/app/hooks'
 import { trackAnalyticsEvent } from '@/core/firebase/analytics'
 import { auth } from '@/core/firebase/firebase'
-import { getUserHooks } from '@/features/users/users.repository'
+import { ensureUserRecord, getUserHooks } from '@/features/users/users.repository'
+import type { AuthProvider } from '@/features/users/users.types'
 import { hydrateHooks } from '@/state/hooksSlice'
 import { clearThemeSelected } from '@/state/themeSlice'
 import { clearUser, setAuthReady, setUserAuth } from '@/state/userSlice'
@@ -18,41 +19,58 @@ export function AuthBootstrap({ children }: AuthBootstrapProps) {
   const loginTrackedRef = useRef(false)
 
   useEffect(() => {
-    // ✅ funzione async ESPLICITA (niente IIFE, niente hack)
-    const hydrateUserHooks = async (uid: string) => {
-      const hooks = await getUserHooks(uid)
-      if (hooks) {
-        dispatch(hydrateHooks(hooks))
-      }
-    }
-
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        dispatch(
-          setUserAuth({
-            uid: user.uid,
-            displayName: user.displayName,
-          })
-        )
-
-        // 🔁 Hydration Firestore → Redux (fire & forget, ma esplicito)
-        void hydrateUserHooks(user.uid)
-        if (!loginTrackedRef.current) {
-          loginTrackedRef.current = true
-
-          void trackAnalyticsEvent('login', {
-            provider: user.providerData[0]?.providerId ?? 'anonymous',
-            uid: user.uid,
-          })
-        }
-      } else {
+    const unsubscribe = onAuthStateChanged(auth, firebaseUser => {
+      if (!firebaseUser) {
         loginTrackedRef.current = false
         dispatch(clearUser())
         dispatch(clearThemeSelected())
+        dispatch(setAuthReady())
+        return
       }
 
-      // ✅ auth risolta UNA SOLA VOLTA
-      dispatch(setAuthReady())
+      void (async () => {
+        const providerId = firebaseUser.providerData[0]?.providerId
+
+        const record = await ensureUserRecord({
+          uid: firebaseUser.uid,
+          displayName: 'IGNORED',
+          company: 'IGNORED',
+          email: firebaseUser.email ?? '',
+          role: providerId === 'password' ? 'recruiter' : 'user',
+          provider: (providerId === 'password'
+            ? 'recruiter'
+            : (providerId ?? 'unknown')) as AuthProvider,
+        })
+
+        dispatch(
+          setUserAuth({
+            uid: record.uid,
+            displayName: record.profile.displayName,
+            role: record.role,
+            company: record.profile.company,
+          })
+        )
+
+        if (record.role === 'user') {
+          const hooks = await getUserHooks(record.uid)
+          if (hooks) dispatch(hydrateHooks(hooks))
+        }
+
+        if (!loginTrackedRef.current) {
+          loginTrackedRef.current = true
+          void trackAnalyticsEvent('login', {
+            uid: record.uid,
+            role: record.role,
+            provider: record.provider,
+            company: record.profile.company,
+          })
+        }
+
+        dispatch(setAuthReady())
+      })().catch(err => {
+        console.error('[AuthBootstrap] Fatal error', err)
+        dispatch(setAuthReady())
+      })
     })
 
     return unsubscribe

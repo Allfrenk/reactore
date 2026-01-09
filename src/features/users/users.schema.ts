@@ -17,7 +17,7 @@ export type UserRecord = {
   uid: string
   role: UserRole
   provider: AuthProvider
-  email: string | null
+  email: string
   profile: UserProfile
   hooks?: UserHooks
   createdAt: unknown
@@ -28,31 +28,34 @@ export type UserRecord = {
 export function createUserRecord(params: {
   uid: string
   displayName: string
-  email: string | null
+  company: string
+  email: string
   role: UserRole
   provider: AuthProvider
 }): UserRecord {
-  const isUser = params.role === 'user'
-
-  return {
+  const base: UserRecord = {
     uid: params.uid,
     role: params.role,
     provider: params.provider,
     email: params.email,
     profile: {
       displayName: params.displayName,
-      company: '',
+      company: params.company,
     },
-    hooks: isUser
-      ? {
-          useState: { value: '0' },
-          useEffect: { value: '0' },
-          useMemo: { value: '0' },
-          useCallback: { value: '0' },
-        }
-      : undefined,
     createdAt: serverTimestamp(),
     lastLoginAt: serverTimestamp(),
     loginCount: 1,
   }
+
+  // ✅ hooks SOLO per utenti standard
+  if (params.role === 'user') {
+    base.hooks = {
+      useState: { value: '0' },
+      useEffect: { value: '0' },
+      useMemo: { value: '0' },
+      useCallback: { value: '0' },
+    }
+  }
+
+  return base
 }

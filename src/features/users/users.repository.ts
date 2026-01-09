@@ -2,13 +2,15 @@ import { db } from '@/core/firebase/firebase'
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 
 import type { HooksState } from '@/state/hooksSlice'
+import type { UserRecord } from './users.schema'
 import { createUserRecord } from './users.schema'
 import type { AuthProvider, UserRole } from './users.types'
 
 type UpsertUserParams = {
   uid: string
   displayName: string
-  email: string | null
+  company: string
+  email: string
   role: UserRole
   provider: AuthProvider
 }
@@ -27,14 +29,49 @@ export async function upsertUser(params: UpsertUserParams) {
     lastLoginAt: serverTimestamp(),
     loginCount: (snap.data().loginCount ?? 0) + 1,
     'profile.displayName': params.displayName,
+    'profile.company': params.company,
+    email: params.email,
+    role: params.role,
+    provider: params.provider,
   })
 }
 
-// ✅ già ok: la tua getUserHooks tipizzata/normalizzata resta
+export async function ensureUserRecord(params: UpsertUserParams): Promise<UserRecord> {
+  const ref = doc(db, 'users', params.uid)
+  const snap = await getDoc(ref)
+
+  // 🔹 CASO 1: non esiste → creo
+  if (!snap.exists()) {
+    const record = createUserRecord(params)
+    await setDoc(ref, record)
+    return record
+  }
+
+  const existing = snap.data() as UserRecord
+
+  // 🔹 CASO 2: esiste → aggiorno SOLO metadata tecnici
+  await updateDoc(ref, {
+    lastLoginAt: serverTimestamp(),
+    loginCount: (existing.loginCount ?? 0) + 1,
+  })
+
+  return {
+    ...existing,
+    loginCount: (existing.loginCount ?? 0) + 1,
+    lastLoginAt: existing.lastLoginAt,
+  }
+}
+
+export async function getUserRecord(uid: string): Promise<UserRecord | null> {
+  const ref = doc(db, 'users', uid)
+  const snap = await getDoc(ref)
+  if (!snap.exists()) return null
+  return snap.data() as UserRecord
+}
+
 export async function getUserHooks(uid: string): Promise<HooksState['data'] | null> {
   const ref = doc(db, 'users', uid)
   const snap = await getDoc(ref)
-
   if (!snap.exists()) return null
 
   const raw = snap.data().hooks as unknown
@@ -50,10 +87,8 @@ export async function getUserHooks(uid: string): Promise<HooksState['data'] | nu
   }
 }
 
-// ✅ NUOVA: persiste TUTTI gli hooks nello user doc
 export async function updateUserHooks(uid: string, hooks: HooksState['data']) {
   const ref = doc(db, 'users', uid)
-
   await updateDoc(ref, {
     hooks,
     lastLoginAt: serverTimestamp(),

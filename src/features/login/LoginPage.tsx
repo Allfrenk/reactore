@@ -7,38 +7,72 @@ import { useState } from 'react'
 
 export function LoginPage() {
   const [recruiterOpen, setRecruiterOpen] = useState(false)
+  const [displayName, setDisplayName] = useState('')
+  const [company, setCompany] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  /* =========================
+     Recruiter Login
+  ========================== */
 
   const handleRecruiterLogin = async () => {
     setError(null)
+    setLoading(true)
 
-    const input = password.trim()
-    const expected = (
-      import.meta.env.VITE_RECRUITER_PASSWORD as string | undefined
-    )?.trim()
+    if (!displayName.trim()) {
+      setError('Please enter your name')
+      setLoading(false)
+      return
+    }
 
-    if (!expected || input !== expected) {
-      setError('Invalid recruiter password')
+    if (!company.trim()) {
+      setError('Please enter your company')
+      setLoading(false)
+      return
+    }
+
+    if (!password.trim()) {
+      setError('Please enter the recruiter password')
+      setLoading(false)
       return
     }
 
     try {
-      await loginAsRecruiter()
+      await loginAsRecruiter({
+        displayName,
+        company,
+        password: password.trim(),
+      })
+      // SUCCESS → AuthGate gestisce il redirect
     } catch (err) {
-      if (
-        err &&
-        typeof err === 'object' &&
-        'code' in err &&
-        err.code !== 'auth/popup-closed-by-user'
-      ) {
+      if (err && typeof err === 'object' && 'code' in err) {
+        switch (err.code) {
+          case 'auth/wrong-password':
+            setError('Wrong recruiter password')
+            break
+          case 'auth/too-many-requests':
+            setError('Too many attempts. Please try again later.')
+            break
+          default:
+            setError('Recruiter login failed')
+        }
+      } else {
         setError('Recruiter login failed')
       }
+    } finally {
+      setLoading(false)
     }
   }
 
+  /* =========================
+     Standard Login
+  ========================== */
+
   const handleGithubLogin = async () => {
     setError(null)
+    setLoading(true)
     try {
       await loginWithGithub()
     } catch (err) {
@@ -54,8 +88,26 @@ export function LoginPage() {
       } else {
         setError('GitHub login failed')
       }
+    } finally {
+      setLoading(false)
     }
   }
+
+  const handleGoogleLogin = async () => {
+    setError(null)
+    setLoading(true)
+    try {
+      await loginWithGoogle()
+    } catch {
+      setError('Google login failed')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  /* =========================
+     UI
+  ========================== */
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-(--bg-main) px-4">
@@ -79,56 +131,90 @@ export function LoginPage() {
           {!recruiterOpen ? (
             <div className="w-full space-y-3">
               <button
-                onClick={() => void loginWithGoogle()}
-                className="flex w-full items-center justify-center gap-3 rounded-xl bg-orange-500 px-4 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                disabled={loading}
+                onClick={() => void handleGoogleLogin()}
+                className="flex w-full items-center justify-center gap-3 rounded-xl bg-orange-500 px-4 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
               >
                 <span className="text-base font-bold">G</span>
-                Continue with Google
+                {loading ? 'Signing in…' : 'Continue with Google'}
               </button>
 
               <button
+                disabled={loading}
                 onClick={() => void handleGithubLogin()}
-                className="flex w-full items-center justify-center gap-3 rounded-xl bg-neutral-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
+                className="flex w-full items-center justify-center gap-3 rounded-xl bg-neutral-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:opacity-60"
               >
                 <span className="text-base font-bold">GH</span>
-                Continue with GitHub
+                {loading ? 'Signing in…' : 'Continue with GitHub'}
               </button>
 
               <button
                 type="button"
-                onClick={() => setRecruiterOpen(true)}
+                onClick={() => {
+                  setRecruiterOpen(true)
+                  setError(null)
+                }}
                 className="text-muted-foreground hover:text-foreground mt-4 text-xs underline underline-offset-4"
               >
                 Are you a recruiter?
               </button>
             </div>
           ) : (
-            <div className="w-full space-y-4">
+            /* 🔐 FORM RECRUITER — fondamentale per il password manager */
+            <form
+              className="mt-4 w-full space-y-5"
+              onSubmit={e => {
+                e.preventDefault()
+                void handleRecruiterLogin()
+              }}
+            >
               <input
+                disabled={loading}
+                type="text"
+                name="username"
+                autoComplete="username"
+                value={displayName}
+                onChange={e => setDisplayName(e.target.value)}
+                placeholder="Your name"
+                className="border-border/50 w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-(--accent-primary)/30"
+              />
+
+              <input
+                disabled={loading}
+                type="text"
+                name="organization"
+                autoComplete="organization"
+                value={company}
+                onChange={e => setCompany(e.target.value)}
+                placeholder="Company"
+                className="border-border/50 w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-(--accent-primary)/30"
+              />
+
+              <input
+                disabled={loading}
                 type="password"
-                name="recruiter-password"
+                name="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Recruiter password"
-                autoComplete="new-password"
-                autoCorrect="off"
-                autoCapitalize="none"
-                spellCheck={false}
                 className="border-border/50 w-full rounded-xl border bg-transparent px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-(--accent-primary)/30"
               />
 
               <button
-                type="button"
-                onClick={() => void handleRecruiterLogin()}
-                className="flex w-full items-center justify-center rounded-xl bg-(--accent-primary) px-4 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                type="submit"
+                disabled={loading}
+                className="flex w-full items-center justify-center rounded-xl bg-(--accent-primary) px-4 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
               >
-                Enter as Recruiter
+                {loading ? 'Entering…' : 'Enter as Recruiter'}
               </button>
 
               <button
                 type="button"
                 onClick={() => {
                   setRecruiterOpen(false)
+                  setDisplayName('')
+                  setCompany('')
                   setPassword('')
                   setError(null)
                 }}
@@ -136,16 +222,18 @@ export function LoginPage() {
               >
                 Back to normal login
               </button>
-            </div>
+            </form>
           )}
         </div>
 
         {error && <p className="mt-2 text-xs text-red-400">{error}</p>}
 
-        {/* FOOTER */}
-        <p className="text-muted-foreground text-xs">
-          Authentication required to access the app
-        </p>
+        {recruiterOpen && (
+          <p className="text-muted-foreground mt-4 text-xs">
+            Recruiter access is tracked for analytics. Hook persistence is available for
+            standard users.
+          </p>
+        )}
       </div>
     </div>
   )

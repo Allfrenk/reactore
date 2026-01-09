@@ -3,8 +3,12 @@ import { RoadmapSection } from '@/shared/components/general/RoadmapSection'
 import { FadeUp } from '@/shared/components/ui/FadeUp'
 import { PageFade } from '@/shared/components/ui/PageFade'
 import { TiltCardWrapper } from '@/shared/components/ui/TiltCardWrapper'
+import { useAuth } from '@/shared/hooks/useAuth'
 
 export function HomePage() {
+  const { user } = useAuth()
+  const isRecruiter = user?.role === 'recruiter'
+
   return (
     <PageFade>
       <main className="home-root">
@@ -28,6 +32,18 @@ export function HomePage() {
             </a>{' '}
             →
           </p>
+
+          {/* RECRUITER DISCLAIMER (solo recruiter) */}
+          {isRecruiter && (
+            <div className="recruiter-disclaimer glass-card">
+              <strong>Recruiter mode</strong>
+              <p>
+                You are exploring a limited demo environment.
+                <br />
+                To see persistence and full analytics, use a standard login.
+              </p>
+            </div>
+          )}
         </section>
 
         {/* ROADMAP */}
@@ -96,6 +112,24 @@ export function HomePage() {
 
         .hero-cta-link:hover {
           color: var(--accent-primary);
+        }
+
+        /* RECRUITER DISCLAIMER */
+        .recruiter-disclaimer {
+          margin-top: 1.3rem;
+          max-width: 42rem;
+          padding: 1rem 1.2rem;
+          border-radius: 1rem;
+          font-size: 0.92rem;
+          line-height: 1.45;
+          color: hsl(var(--muted-foreground));
+        }
+
+        .recruiter-disclaimer strong {
+          display: block;
+          margin-bottom: 0.2rem;
+          color: hsl(var(--foreground));
+          font-weight: 600;
         }
 
         /* ROADMAP */

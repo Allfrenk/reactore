@@ -1,10 +1,14 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
+export type UserRole = 'user' | 'recruiter'
+
 type UserState = {
   user: {
     uid: string
     displayName: string | null
+    role: UserRole
+    company: string
   } | null
   loading: boolean
 }
