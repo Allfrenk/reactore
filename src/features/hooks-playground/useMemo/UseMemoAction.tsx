@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
+import { trackPageInteraction } from '@/core/firebase/trakPageInteraction'
 import { useMemoConfig } from '@/features/hooks-playground/config/useMemo.config'
 import { ActionCard } from '@/shared/components/cards/ActionCard'
 import { updateHookValue } from '@/state/hooksSlice'
@@ -73,18 +74,28 @@ export function UseMemoAction() {
      ACTIONS
   ========================== */
 
-  const increment = () =>
-    dispatch(updateHookValue({ hook: 'useMemo', value: String(value + 1) }))
+  // ⬇️ sostituisci SOLO queste funzioni ACTIONS
 
-  const decrement = () =>
+  const increment = () => {
+    dispatch(updateHookValue({ hook: 'useMemo', value: String(value + 1) }))
+    trackPageInteraction('useMemo', 'increment')
+  }
+
+  const decrement = () => {
     dispatch(updateHookValue({ hook: 'useMemo', value: String(Math.max(0, value - 1)) }))
+    trackPageInteraction('useMemo', 'decrement')
+  }
 
   const toggleMemo = () => {
     setUseMemoEnabled(v => !v)
     triggerRenderPulse()
+    trackPageInteraction('useMemo', 'toggle_useMemo')
   }
 
-  const triggerUnrelated = () => setUnrelated(v => v + 1)
+  const triggerUnrelated = () => {
+    setUnrelated(v => v + 1)
+    trackPageInteraction('useMemo', 'trigger_rerender')
+  }
 
   const { title, subtitle } = useMemoConfig.action
 

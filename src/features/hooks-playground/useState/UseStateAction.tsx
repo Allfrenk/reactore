@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
+import { trackPageInteraction } from '@/core/firebase/trakPageInteraction'
 import { useStateConfig } from '@/features/hooks-playground/config/useState.config'
 import { ActionCard } from '@/shared/components/cards/ActionCard'
 import { updateHookValue } from '@/state/hooksSlice'
@@ -11,29 +12,35 @@ export function UseStateAction() {
 
   const { title, subtitle } = useStateConfig.action
 
-  const decrement = () =>
+  const decrement = () => {
     dispatch(
       updateHookValue({
         hook: 'useState',
         value: String(Math.max(0, count - 1)),
       })
     )
+    trackPageInteraction('useState', 'decrement')
+  }
 
-  const increment = () =>
+  const increment = () => {
     dispatch(
       updateHookValue({
         hook: 'useState',
         value: String(count + 1),
       })
     )
+    trackPageInteraction('useState', 'increment')
+  }
 
-  const reset = () =>
+  const reset = () => {
     dispatch(
       updateHookValue({
         hook: 'useState',
         value: '0',
       })
     )
+    trackPageInteraction('useState', 'reset')
+  }
 
   return (
     <ActionCard title={title} subtitle={subtitle}>

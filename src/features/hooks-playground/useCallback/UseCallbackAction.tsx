@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
+import { trackPageInteraction } from '@/core/firebase/trakPageInteraction'
 import { useCallbackConfig } from '@/features/hooks-playground/config/useCallback.config'
 import { ActionCard } from '@/shared/components/cards/ActionCard'
 
@@ -75,11 +76,25 @@ export function UseCallbackAction() {
      CALLBACKS
   -------------------------- */
 
-  const onPlusRaw = () => setCount(c => c + 1)
-  const onMinusRaw = () => setCount(c => Math.max(0, c - 1))
+  const onPlusRaw = () => {
+    setCount(c => c + 1)
+    trackPageInteraction('useCallback', 'increment')
+  }
 
-  const onPlusMemo = useCallback(() => setCount(c => c + 1), [])
-  const onMinusMemo = useCallback(() => setCount(c => Math.max(0, c - 1)), [])
+  const onMinusRaw = () => {
+    setCount(c => Math.max(0, c - 1))
+    trackPageInteraction('useCallback', 'decrement')
+  }
+
+  const onPlusMemo = useCallback(() => {
+    setCount(c => c + 1)
+    trackPageInteraction('useCallback', 'increment')
+  }, [])
+
+  const onMinusMemo = useCallback(() => {
+    setCount(c => Math.max(0, c - 1))
+    trackPageInteraction('useCallback', 'decrement')
+  }, [])
 
   const onPlus = useCallbackEnabled ? onPlusMemo : onPlusRaw
   const onMinus = useCallbackEnabled ? onMinusMemo : onMinusRaw
@@ -136,14 +151,17 @@ export function UseCallbackAction() {
           </div>
 
           <button
-            onClick={() => setUseCallbackEnabled(v => !v)}
+            onClick={() => {
+              setUseCallbackEnabled(v => !v)
+              trackPageInteraction('useCallback', 'toggle_useCallback')
+            }}
             className={`rounded-md px-4 py-2 text-sm font-medium transition ${
               useCallbackEnabled
                 ? 'bg-(--accent-primary) text-white'
                 : 'text-muted-foreground border hover:bg-(--accent-primary)/10'
             }`}
           >
-            {useCallbackEnabled ? 'useCallback ON' : 'useCallback OFF_toggle'}
+            {useCallbackEnabled ? 'useCallback ON' : 'useCallback OFF'}
           </button>
         </div>
 
@@ -151,7 +169,10 @@ export function UseCallbackAction() {
         <Child onIncrement={onPlus} />
 
         <button
-          onClick={() => setUnrelated(v => v + 1)}
+          onClick={() => {
+            setUnrelated(v => v + 1)
+            trackPageInteraction('useCallback', 'trigger_rerender')
+          }}
           className="rounded-xl border px-4 py-2 text-sm transition hover:bg-(--accent-primary)/10"
         >
           Trigger parent re-render (unrelated) ({unrelated})

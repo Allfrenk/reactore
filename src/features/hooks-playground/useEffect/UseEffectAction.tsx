@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
+import { trackPageInteraction } from '@/core/firebase/trakPageInteraction'
 import { useEffectConfig } from '@/features/hooks-playground/config/useEffect.config'
 import { ActionCard } from '@/shared/components/cards/ActionCard'
 import { updateHookValue } from '@/state/hooksSlice'
@@ -31,8 +32,17 @@ export function UseEffectAction() {
     return () => clearInterval(intervalId)
   }, [isRunning, time, dispatch])
 
-  const start = () => setIsRunning(true)
-  const stop = () => setIsRunning(false)
+  // ⬇️ sostituisci SOLO queste tre funzioni
+
+  const start = () => {
+    setIsRunning(true)
+    trackPageInteraction('useEffect', 'start')
+  }
+
+  const stop = () => {
+    setIsRunning(false)
+    trackPageInteraction('useEffect', 'stop')
+  }
 
   const reset = () => {
     setIsRunning(false)
@@ -42,6 +52,7 @@ export function UseEffectAction() {
         value: '0',
       })
     )
+    trackPageInteraction('useEffect', 'reset')
   }
 
   return (
