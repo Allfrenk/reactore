@@ -48,7 +48,7 @@ export function Header() {
           <ThemeToggleIcon />
         </div>
 
-        {/* LOGOUT — sempre visibile */}
+        {/* LOGOUT */}
         <button
           onClick={() => void logout()}
           title="Logout"

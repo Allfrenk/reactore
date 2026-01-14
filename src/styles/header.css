@@ -4,16 +4,25 @@
   align-items: center;
   justify-content: space-between;
 
-  /* Altezza fluida */
   height: clamp(64px, 8vw, 88px);
-
-  /* Padding fluido */
   padding-inline: clamp(16px, 4vw, 36px);
 }
 
 /* Click area icona + logo */
 .header-toggle {
   gap: clamp(6px, 1.5vw, 12px);
+  border-radius: 8px;
+}
+
+/* ❌ niente rettangolo bianco su click */
+.header-toggle:focus {
+  outline: none;
+}
+
+/* ✅ focus visibile SOLO da tastiera */
+.header-toggle:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
 /* Icona hamburger / X */
@@ -28,8 +37,6 @@
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--text-primary);
-
-  /* Font fluido */
   font-size: clamp(1.4rem, 3vw, 1.9rem);
 }
 

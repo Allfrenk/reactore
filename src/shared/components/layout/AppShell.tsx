@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
 import { useAnalyticsPageView } from '@/core/firebase/useAnalyticsPageView'
 import { useSidebarSwipe } from '@/shared/hooks/useSidebarSwipe'
 import { closeSidebar } from '@/state/layoutSlice'
+import { Footer } from '../general/Footer'
 
 type AppShellProps = {
   header: React.ReactNode
@@ -18,7 +19,7 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
   useAnalyticsPageView()
 
   return (
-    <div className="app-shell safe-bottom flex w-full flex-col">
+    <div className="app-shell flex w-full flex-col">
       {/* HEADER */}
       <header className="app-header sticky top-0 z-50 shrink-0">{header}</header>
 
@@ -52,9 +53,14 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
               dispatch(closeSidebar())
             }
           }}
-          className={`app-content no-scrollbar flex-1 overflow-y-auto ${sidebarOpen ? 'overflow-hidden md:overflow-y-auto' : ''} `}
+          className={`app-content no-scrollbar flex-1 overflow-y-auto ${
+            sidebarOpen ? 'overflow-hidden md:overflow-y-auto' : ''
+          }`}
         >
           {children}
+
+          {/* ✅ Footer nel flow del main */}
+          <Footer />
         </main>
       </div>
     </div>

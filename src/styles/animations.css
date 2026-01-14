@@ -39,3 +39,10 @@ body {
 .animate-fade-slow {
   animation-duration: 520ms;
 }
+
+/* SPINNER REACTORE */
+@keyframes reactore-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

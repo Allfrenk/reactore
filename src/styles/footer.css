@@ -1,0 +1,78 @@
+.footer-root {
+  background: color-mix(in srgb, var(--bg-surface) 90%, #000 10%);
+  border-top: 1px solid var(--border-soft);
+}
+
+.dark .footer-root {
+  background: #1b1b1b;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 12px clamp(16px, 4vw, 40px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer-disclaimer {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 520px;
+}
+
+/* ACTIONS */
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ICONS */
+.footer-icon {
+  width: 44px;
+  height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.footer-icon img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.footer-icon:hover img {
+  opacity: 1;
+}
+
+/* BUY ME A COFFEE */
+.footer-bmc {
+  /* 🔥 QUESTO SERVE */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* il bottone ufficiale */
+.footer-bmc .bmc-button,
+.footer-bmc a {
+  margin-left: 4px;
+}
