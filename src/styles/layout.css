@@ -2,7 +2,7 @@
   --content-pad-x: clamp(16px, 4vw, 40px);
   --content-pad-top: clamp(16px, 4vw, 40px);
 
-  --footer-mobile-gap: 70px;
+  --footer-mobile-gap: 10px;
 }
 
 /* =========================
@@ -13,7 +13,6 @@
   display: flex;
   flex-direction: column;
   height: var(--app-height);
-  width: 100%;
 }
 
 /* Header */
@@ -81,5 +80,4 @@
   /* 👇 full-bleed controllato */
   margin-left: calc(var(--content-pad-x) * -1);
   margin-right: calc(var(--content-pad-x) * -1);
-  width: calc(100% + var(--content-pad-x) * 2);
 }
