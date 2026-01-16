@@ -1,16 +1,28 @@
+/* =========================
+   FOOTER ROOT
+   ========================= */
+
 .footer-root {
-  background: color-mix(in srgb, var(--bg-surface) 90%, #000 10%);
+  background: color-mix(in srgb, var(--bg-surface) 92%, #000 8%);
   border-top: 1px solid var(--border-soft);
+
+  /* respiro base */
+  padding-bottom: 12px;
 }
 
 .dark .footer-root {
   background: #1b1b1b;
 }
 
+/* =========================
+   CONTAINER
+   ========================= */
+
 .footer-container {
   max-width: 1200px;
   margin-inline: auto;
-  padding: 12px clamp(16px, 4vw, 40px);
+
+  padding: 12px var(--content-pad-x);
 
   display: flex;
   flex-direction: column;
@@ -25,6 +37,10 @@
   }
 }
 
+/* =========================
+   DISCLAIMER
+   ========================= */
+
 .footer-disclaimer {
   font-size: 11px;
   line-height: 1.6;
@@ -32,14 +48,28 @@
   max-width: 520px;
 }
 
-/* ACTIONS */
+/* =========================
+   ACTIONS
+   ========================= */
+
 .footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* LEFT ICON GROUP */
+.footer-icons-left {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* ICONS */
+/* =========================
+   ICONS
+   ========================= */
+
 .footer-icon {
   width: 44px;
   height: 44px;
@@ -52,27 +82,31 @@
   transition: background 0.2s ease;
 }
 
-.footer-icon img {
-  width: 20px;
-  height: 20px;
-  opacity: 0.6;
-  transition: opacity 0.2s ease;
+.footer-icon:hover {
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
 }
 
-.footer-icon:hover img {
-  opacity: 1;
-}
+/* =========================
+   BUY ME A COFFEE
+   ========================= */
 
-/* BUY ME A COFFEE */
 .footer-bmc {
-  /* 🔥 QUESTO SERVE */
-  min-height: 44px;
   display: flex;
   align-items: center;
 }
 
-/* il bottone ufficiale */
-.footer-bmc .bmc-button,
-.footer-bmc a {
-  margin-left: 4px;
+.footer-bmc img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+/* =========================
+   MOBILE FIX (CRITICO)
+   ========================= */
+
+@media (max-width: 768px) {
+  .footer-root {
+    padding-bottom: calc(env(safe-area-inset-bottom) + var(--footer-mobile-gap));
+  }
 }

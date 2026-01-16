@@ -3,19 +3,19 @@ import { closeSidebar, openSidebar } from '@/state/layoutSlice'
 import { useEffect, useRef } from 'react'
 
 /**
- * EDGE ZONE per apertura (px)
- * → deve essere piccola e precisa
+ * Zona valida swipe (percentuale viewport)
+ * → evita gesture browser (edge back)
  */
-const EDGE_OPEN_THRESHOLD_PX = 24
+const SWIPE_MIN_RATIO = 0.2
+const SWIPE_MAX_RATIO = 0.8
 
 /**
- * Distanza minima swipe per evitare micro-movimenti
+ * Distanza minima swipe (gesture intenzionale)
  */
 const MIN_SWIPE_DISTANCE_PX = 60
 
 /**
  * Percentuale larghezza sidebar per chiusura
- * → gesto intenzionale
  */
 const CLOSE_SWIPE_RATIO = 0.45
 
@@ -43,16 +43,18 @@ export function useSidebarSwipe() {
       // ❌ ignora scroll verticale
       if (dy > Math.abs(dx)) return
 
+      const screenWidth = window.innerWidth
+      const startRatio = startX.current / screenWidth
+
+      // ❌ fuori zona valida (protezione swipe browser)
+      if (startRatio < SWIPE_MIN_RATIO || startRatio > SWIPE_MAX_RATIO) return
+
       /**
        * ======================
        * 👉 OPEN SIDEBAR
        * ======================
        */
-      if (
-        !sidebarOpen &&
-        startX.current <= EDGE_OPEN_THRESHOLD_PX &&
-        dx > MIN_SWIPE_DISTANCE_PX
-      ) {
+      if (!sidebarOpen && dx > MIN_SWIPE_DISTANCE_PX) {
         dispatch(openSidebar())
         navigator.vibrate?.(10)
         reset()
@@ -65,8 +67,7 @@ export function useSidebarSwipe() {
        * ======================
        */
       if (sidebarOpen && dx < 0) {
-        // stima larghezza sidebar (mobile)
-        const sidebarWidth = window.innerWidth * 0.55
+        const sidebarWidth = screenWidth * 0.55
 
         if (Math.abs(dx) > sidebarWidth * CLOSE_SWIPE_RATIO) {
           dispatch(closeSidebar())

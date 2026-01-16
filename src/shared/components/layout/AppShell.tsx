@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
 import { useAnalyticsPageView } from '@/core/firebase/useAnalyticsPageView'
 import { useSidebarSwipe } from '@/shared/hooks/useSidebarSwipe'
 import { closeSidebar } from '@/state/layoutSlice'
-import { Footer } from '../general/Footer'
+import { Footer } from './Footer'
 
 type AppShellProps = {
   header: React.ReactNode

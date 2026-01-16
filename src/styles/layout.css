@@ -2,13 +2,18 @@
   --content-pad-x: clamp(16px, 4vw, 40px);
   --content-pad-top: clamp(16px, 4vw, 40px);
 
-  --footer-mobile-gap: 16px;
+  --footer-mobile-gap: 70px;
 }
+
+/* =========================
+   APP SHELL
+   ========================= */
 
 .app-shell {
   display: flex;
   flex-direction: column;
   height: var(--app-height);
+  width: 100%;
 }
 
 /* Header */
@@ -22,20 +27,30 @@
   border-bottom: 1px solid var(--border-soft);
 }
 
+/* =========================
+   BODY
+   ========================= */
+
 .app-body {
   display: flex;
   flex: 1;
   min-height: 0;
+
+  /* 🔒 BLOCCO DEFINITIVO SCROLL ORIZZONTALE */
+  overflow-x: hidden;
 }
 
-/* Sidebar: SOLO stile, NO width */
+/* Sidebar: SOLO stile */
 .app-sidebar {
   background: var(--bg-surface);
   border-right: 1px solid var(--border-soft);
   height: 100%;
 }
 
-/* Main content */
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
 .app-content {
   flex: 1;
 
@@ -49,38 +64,22 @@
   display: flex;
   flex-direction: column;
 
+  /* evita overflow orizzontale da figli */
   min-width: 0;
+
+  /* scroll verticale SOLO qui */
   overflow-y: auto;
 }
 
-/* ✅ Footer token dedicato */
+/* =========================
+   FOOTER TOKEN
+   ========================= */
+
 .app-footer {
-  /* footer sempre in fondo al main */
   margin-top: auto;
 
-  /* bypass padding orizzontale del main */
+  /* 👇 full-bleed controllato */
   margin-left: calc(var(--content-pad-x) * -1);
   margin-right: calc(var(--content-pad-x) * -1);
   width: calc(100% + var(--content-pad-x) * 2);
-}
-
-/* DEFAULT: niente safe bottom */
-.safe-bottom {
-  padding-bottom: 0;
-}
-
-/* Mobile generico (respiro contenuto) */
-@media (max-width: 768px) {
-  .safe-bottom-mobile {
-    padding-bottom: var(--footer-mobile-gap);
-  }
-}
-
-/* iOS Safari specifico */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  @media (max-width: 768px) {
-    .safe-bottom-ios {
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-  }
 }
