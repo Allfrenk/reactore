@@ -110,7 +110,19 @@ export function LoginPage() {
   ========================== */
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-(--bg-main) px-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-(--bg-main) px-4 pb-4">
+      {/* 🌟 DEMO MESSAGE */}
+      <div className="mb-6 max-w-sm text-center">
+        <p className="text-xl font-medium">
+          Explore Reactore in{' '}
+          <span className="font-semibold text-(--accent-primary)">demo mode</span>
+        </p>
+        <p className="text-muted-foreground mt-1 text-lg">
+          No personal data is stored. Login is required to interact with the app.
+        </p>
+      </div>
+
+      {/* LOGIN CARD */}
       <div className="glass-card flex min-h-[420px] w-full max-w-sm flex-col p-8 text-center">
         {/* HEADER */}
         <div className="space-y-3">
@@ -225,9 +237,7 @@ export function LoginPage() {
             </form>
           )}
         </div>
-
         {error && <p className="mt-2 text-xs text-red-400">{error}</p>}
-
         {recruiterOpen && (
           <p className="text-muted-foreground mt-4 text-xs">
             Recruiter access is tracked for analytics. Hook persistence is available for
