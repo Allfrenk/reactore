@@ -1,12 +1,31 @@
 import { useFinePointer } from '@/shared/hooks/useFinePointer'
 import { useRef } from 'react'
 
+type TiltIntensity = 'soft' | 'medium' | 'strong'
+
 type TiltCardWrapperProps = {
   children: React.ReactNode
   className?: string
+  /**
+   * Tilt intensity preset:
+   * - soft   → subtle tilt (1.8)
+   * - medium → visible tilt (4.5)
+   * - strong → pronounced tilt (7)
+   */
+  tiltIntensity?: TiltIntensity
 }
 
-export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperProps) {
+const TILT_INTENSITY_MAP: Record<TiltIntensity, number> = {
+  soft: 1.8,
+  medium: 4.5,
+  strong: 7,
+}
+
+export function TiltCardWrapper({
+  children,
+  className = '',
+  tiltIntensity = 'soft',
+}: TiltCardWrapperProps) {
   const ref = useRef<HTMLDivElement>(null)
   const hasFinePointer = useFinePointer()
 
@@ -24,9 +43,10 @@ export function TiltCardWrapper({ children, className = '' }: TiltCardWrapperPro
     const centerX = rect.width / 2
     const centerY = rect.height / 2
 
-    // 🔽 TILT MOLTO RIDOTTO (anti-blur)
-    const rotateX = ((y - centerY) / centerY) * -0.8
-    const rotateY = ((x - centerX) / centerX) * 0.8
+    const intensity = TILT_INTENSITY_MAP[tiltIntensity]
+
+    const rotateX = ((y - centerY) / centerY) * -intensity
+    const rotateY = ((x - centerX) / centerX) * intensity
 
     el.style.transform = `
       perspective(1000px)

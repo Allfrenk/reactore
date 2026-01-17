@@ -10,5 +10,12 @@
   "endOfLine": "lf",
   "quoteProps": "as-needed",
   "proseWrap": "preserve",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": [
+    "prettier-plugin-classnames",
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-merge"
+  ],
+  "customAttributes": ["class", "className"],
+  "endingPosition": "absolute-with-indent",
+  "collapsible": false
 }

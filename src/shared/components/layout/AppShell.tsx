@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
 import { useAnalyticsPageView } from '@/core/firebase/useAnalyticsPageView'
+import { useScrollToTop } from '@/shared/hooks/usescrollTotop'
 import { useSidebarSwipe } from '@/shared/hooks/useSidebarSwipe'
 import { closeSidebar } from '@/state/layoutSlice'
 import { Footer } from './Footer'
@@ -17,6 +18,7 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
   // 👈 gesture swipe open / close sidebar (mobile only)
   useSidebarSwipe()
   useAnalyticsPageView()
+  useScrollToTop()
 
   return (
     <div className="app-shell flex w-full flex-col">

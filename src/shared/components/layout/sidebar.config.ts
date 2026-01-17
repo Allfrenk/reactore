@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { Code2, Home } from 'lucide-react'
+import { Code2, Home, Layers } from 'lucide-react'
 
 type SidebarItem = {
   type: 'item'
@@ -39,6 +39,25 @@ export const sidebarConfig: Array<SidebarItem | SidebarGroup> = [
       { label: 'useEffect', to: '/hooks/useEffect' },
       { label: 'useMemo', to: '/hooks/useMemo', badge: 'new' },
       { label: 'useCallback', to: '/hooks/useCallback', badge: 'new' },
+    ],
+  },
+  {
+    type: 'group',
+    label: 'Redux Overview',
+    basePath: '/redux',
+    to: '/redux/what-is-redux', // 👈 entry point
+    icon: Layers,
+    children: [
+      {
+        label: 'What is Redux',
+        to: '/redux/what-is-redux',
+        badge: 'new',
+      },
+      {
+        label: 'Your Store',
+        to: '/redux/your-store',
+        badge: 'new',
+      },
     ],
   },
 ] as const
