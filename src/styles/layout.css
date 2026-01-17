@@ -1,8 +1,6 @@
 :root {
   --content-pad-x: clamp(16px, 4vw, 40px);
   --content-pad-top: clamp(16px, 4vw, 40px);
-
-  --footer-mobile-gap: 10px;
 }
 
 /* =========================
@@ -35,11 +33,11 @@
   flex: 1;
   min-height: 0;
 
-  /* 🔒 BLOCCO DEFINITIVO SCROLL ORIZZONTALE */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
-/* Sidebar: SOLO stile */
+/* Sidebar */
 .app-sidebar {
   background: var(--bg-surface);
   border-right: 1px solid var(--border-soft);
@@ -53,31 +51,26 @@
 .app-content {
   flex: 1;
 
-  /* padding SOLO sopra e ai lati */
   padding-top: var(--content-pad-top);
-  padding-left: var(--content-pad-x);
-  padding-right: var(--content-pad-x);
-  padding-bottom: 0;
+  padding-inline: var(--content-pad-x);
 
-  /* layout verticale: contenuto + footer */
   display: flex;
   flex-direction: column;
 
-  /* evita overflow orizzontale da figli */
   min-width: 0;
 
-  /* scroll verticale SOLO qui */
+  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: auto;
 }
 
 /* =========================
-   FOOTER TOKEN
+   FOOTER WRAPPER (full-bleed safe)
    ========================= */
 
 .app-footer {
   margin-top: auto;
 
-  /* 👇 full-bleed controllato */
-  margin-left: calc(var(--content-pad-x) * -1);
-  margin-right: calc(var(--content-pad-x) * -1);
+  width: calc(100% + (var(--content-pad-x) * 2));
+  transform: translateX(calc(var(--content-pad-x) * -1));
 }

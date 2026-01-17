@@ -1,3 +1,8 @@
+:root {
+  --footer-pad-x: clamp(16px, 4vw, 40px);
+  --footer-mobile-gap: 25px;
+}
+
 /* =========================
    FOOTER ROOT
    ========================= */
@@ -6,8 +11,11 @@
   background: color-mix(in srgb, var(--bg-surface) 92%, #000 8%);
   border-top: 1px solid var(--border-soft);
 
-  /* respiro base */
   padding-bottom: 12px;
+
+  /* 🔒 non deve MAI creare overflow */
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .dark .footer-root {
@@ -22,13 +30,16 @@
   max-width: 1200px;
   margin-inline: auto;
 
-  padding: 12px var(--content-pad-x);
+  padding: 12px var(--footer-pad-x);
 
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  min-width: 0;
 }
 
+/* desktop: disclaimer a sinistra, actions a destra */
 @media (min-width: 768px) {
   .footer-container {
     flex-direction: row;
@@ -55,7 +66,8 @@
 .footer-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%; /* 🔑 fondamentale */
+
   gap: 16px;
 }
 
@@ -64,6 +76,11 @@
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* RIGHT – BUY ME A COFFEE */
+.footer-bmc {
+  margin-left: auto; /* ✅ spinge a destra in modo stabile */
 }
 
 /* =========================
@@ -90,11 +107,6 @@
    BUY ME A COFFEE
    ========================= */
 
-.footer-bmc {
-  display: flex;
-  align-items: center;
-}
-
 .footer-bmc img {
   height: 44px;
   width: auto;
@@ -102,7 +114,7 @@
 }
 
 /* =========================
-   MOBILE FIX (CRITICO)
+   MOBILE SAFE AREA
    ========================= */
 
 @media (max-width: 768px) {
