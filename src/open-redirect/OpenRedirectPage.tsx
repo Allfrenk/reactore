@@ -1,31 +1,10 @@
-import { useEffect, useState } from 'react'
-
-function isIOS() {
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
-}
-
-function isLinkedInWebView() {
-  return /LinkedInApp/i.test(navigator.userAgent)
-}
-
 function isMobile() {
-  return window.matchMedia('(max-width: 768px)').matches
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 }
 
 export function OpenRedirectPage() {
+  const mobile = isMobile()
   const target = window.location.origin
-  const [mobile, setMobile] = useState(() => isMobile())
-
-  // 🔹 Tentativo automatico iOS 17+ (best effort)
-  useEffect(() => {
-    if (isIOS() && isLinkedInWebView()) {
-      try {
-        window.location.href = `x-safari-${target}`
-      } catch {
-        // fallback silenzioso
-      }
-    }
-  }, [target])
 
   const handleContinue = () => {
     window.open(target, '_blank')
@@ -34,100 +13,88 @@ export function OpenRedirectPage() {
   return (
     <div
       style={{
-        height: '100vh',
-        width: '100vw',
+        minHeight: '100vh',
         background: '#fff',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
         padding: 24,
         boxSizing: 'border-box',
-        position: 'relative',
         fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont',
       }}
     >
-      {/* MOBILE ONLY — DOODLE ARROW */}
-{mobile && (
-  <div
-    style={{
-      position: 'absolute',
-      top: 80,            // ⬅️ scende verso il titolo
-      right: -10,         // ⬅️ leggermente fuori per dare respiro
-      width: 260,         // ⬅️ MOLTO più grande
-      height: 260,
-      pointerEvents: 'none',
-    }}
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 800"
-      width="100%"
-      height="100%"
-    >
-      <g
-        strokeWidth="7"
-        stroke="hsl(0, 0%, 0%)"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        transform="
-          matrix(
-            -0.35,
-            -0.94,
-             0.94,
-            -0.35,
-             120,
-             900
-          )
-        "
-      >
-        <path
-          d="
-            M180 260
-            Q 300 520 400 360
-            Q 520 160 650 520
-          "
-          markerEnd="url(#arrow)"
-        />
-      </g>
-
-      <defs>
-        <marker
-          id="arrow"
-          markerWidth="10"
-          markerHeight="10"
-          refX="6"
-          refY="6"
-          viewBox="0 0 12 12"
-          orient="auto"
-        >
-          <polyline
-            points="0,6 6,3 0,0"
-            fill="none"
-            strokeWidth="2"
-            stroke="hsl(0, 0%, 0%)"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            transform="translate(2,3)"
-          />
-        </marker>
-      </defs>
-    </svg>
-  </div>
-)}
-
-
-      {/* CONTENT */}
       <div
         style={{
-          maxWidth: 420,
           width: '100%',
+          maxWidth: 520,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
           textAlign: 'center',
         }}
       >
+        {/* ARROW CONTAINER — SOLO MOBILE */}
+        {mobile && (
+          <div
+            style={{
+              width: '100%',
+              minHeight: 180,          // spazio dedicato
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              paddingRight: 12,
+              boxSizing: 'border-box',
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 800 800"
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMaxYMin meet"
+            >
+              <g
+                strokeWidth="7"
+                stroke="hsl(0, 0%, 0%)"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                transform="matrix(-0.22,-0.97,0.97,-0.22,80,880)"
+              >
+                <path
+                  d="M232 232Q362 687 400 400Q439 167 568 568"
+                  markerEnd="url(#arrow)"
+                />
+              </g>
+
+              <defs>
+                <marker
+                  id="arrow"
+                  markerWidth="12"
+                  markerHeight="12"
+                  refX="6"
+                  refY="6"
+                  viewBox="0 0 12 12"
+                  orient="auto"
+                >
+                  <polyline
+                    points="0,6 6,3 0,0"
+                    fill="none"
+                    strokeWidth="2"
+                    stroke="hsl(0, 0%, 0%)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    transform="translate(2,3)"
+                  />
+                </marker>
+              </defs>
+            </svg>
+          </div>
+        )}
+
+        {/* TITLE */}
         <h1
           style={{
-            fontSize: mobile ? 30 : 40,
+            fontSize: mobile ? 32 : 44,
             fontWeight: 600,
             marginBottom: 16,
             color: '#111',
@@ -136,51 +103,50 @@ export function OpenRedirectPage() {
           Opening Reactore…
         </h1>
 
-        <p
+        {/* GUIDA — FOCUS */}
+        <div
           style={{
-            fontSize: mobile ? 16 : 18,
-            fontWeight: 400,
-            color: '#555',
-            marginBottom: 32,
+            fontSize: mobile ? 18 : 20,
+            fontWeight: 500,
+            color: '#222',
+            marginBottom: 24,
+            lineHeight: 1.5,
           }}
         >
-          To continue, open Reactore in your browser.
-        </p>
+          <div>If the page doesn’t open automatically:</div>
+          <div style={{ marginTop: 8 }}>
+            Tap <strong>⋯</strong> (top right) and select{' '}
+            <strong>“Open in browser”</strong>
+          </div>
+        </div>
 
+        {/* CTA */}
         <button
           onClick={handleContinue}
           style={{
-            padding: mobile ? '14px 22px' : '16px 26px',
-            fontSize: mobile ? 16 : 18,
-            borderRadius: 12,
+            width: '100%',
+            padding: '16px 28px',
+            fontSize: 18,
+            fontWeight: 500,
+            borderRadius: 14,
             border: 'none',
             background: '#000',
             color: '#fff',
             cursor: 'pointer',
-            width: '100%',
-            fontWeight: 500,
           }}
         >
-          Continue
+          Continue in browser
         </button>
 
-        {/* MICRO GUIDA */}
+        {/* MICRO DESC */}
         <div
           style={{
-            marginTop: 28,
-            paddingTop: 20,
-            borderTop: '1px solid #eee',
-            fontSize: mobile ? 13 : 14,
+            marginTop: 12,
+            fontSize: 14,
             color: '#666',
-            textAlign: 'center',
           }}
         >
-          <p style={{ marginBottom: 6 }}>
-            If it doesn’t open automatically:
-          </p>
-          <p style={{ margin: 0 }}>
-            Tap <strong>⋯</strong> (top right) → <strong>Open in browser</strong>
-          </p>
+          Google login requires a full browser for security reasons.
         </div>
       </div>
     </div>
