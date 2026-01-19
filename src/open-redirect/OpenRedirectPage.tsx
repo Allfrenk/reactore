@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function isIOS() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent)
@@ -8,8 +8,13 @@ function isLinkedInWebView() {
   return /LinkedInApp/i.test(navigator.userAgent)
 }
 
+function isMobile() {
+  return window.matchMedia('(max-width: 768px)').matches
+}
+
 export function OpenRedirectPage() {
   const target = window.location.origin
+  const [mobile, setMobile] = useState(() => isMobile())
 
   // 🔹 Tentativo automatico iOS 17+ (best effort)
   useEffect(() => {
@@ -35,61 +40,97 @@ export function OpenRedirectPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'relative',
         padding: 24,
         boxSizing: 'border-box',
+        position: 'relative',
+        fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont',
       }}
     >
-      {/* DOODLE ARROW */}
-      <svg
-        width="140"
-        height="90"
-        viewBox="0 0 140 90"
-        style={{
-          position: 'absolute',
-          top: 12,
-          right: 12,
-          opacity: 0.7,
-          pointerEvents: 'none',
-        }}
+      {/* MOBILE ONLY — DOODLE ARROW */}
+{mobile && (
+  <div
+    style={{
+      position: 'absolute',
+      top: 80,            // ⬅️ scende verso il titolo
+      right: -10,         // ⬅️ leggermente fuori per dare respiro
+      width: 260,         // ⬅️ MOLTO più grande
+      height: 260,
+      pointerEvents: 'none',
+    }}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 800 800"
+      width="100%"
+      height="100%"
+    >
+      <g
+        strokeWidth="7"
+        stroke="hsl(0, 0%, 0%)"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        transform="
+          matrix(
+            -0.35,
+            -0.94,
+             0.94,
+            -0.35,
+             120,
+             900
+          )
+        "
       >
-        {/* curva principale */}
         <path
-          d="M20 70
-             C 40 20,
-               90 20,
-               115 18"
-          stroke="#000"
-          strokeWidth="2.5"
-          fill="none"
-          strokeLinecap="round"
+          d="
+            M180 260
+            Q 300 520 400 360
+            Q 520 160 650 520
+          "
+          markerEnd="url(#arrow)"
         />
+      </g>
 
-        {/* punta freccia */}
-        <path
-          d="M110 12
-             L 122 18
-             L 108 22"
-          stroke="#000"
-          strokeWidth="2.5"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
+      <defs>
+        <marker
+          id="arrow"
+          markerWidth="10"
+          markerHeight="10"
+          refX="6"
+          refY="6"
+          viewBox="0 0 12 12"
+          orient="auto"
+        >
+          <polyline
+            points="0,6 6,3 0,0"
+            fill="none"
+            strokeWidth="2"
+            stroke="hsl(0, 0%, 0%)"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            transform="translate(2,3)"
+          />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+)}
 
-      {/* CONTENUTO */}
+
+      {/* CONTENT */}
       <div
         style={{
-          maxWidth: 340,
+          maxWidth: 420,
           width: '100%',
           textAlign: 'center',
         }}
       >
         <h1
           style={{
-            fontSize: 28,
+            fontSize: mobile ? 30 : 40,
             fontWeight: 600,
-            marginBottom: 12,
+            marginBottom: 16,
+            color: '#111',
           }}
         >
           Opening Reactore…
@@ -97,9 +138,10 @@ export function OpenRedirectPage() {
 
         <p
           style={{
-            fontSize: 15,
+            fontSize: mobile ? 16 : 18,
+            fontWeight: 400,
             color: '#555',
-            marginBottom: 28,
+            marginBottom: 32,
           }}
         >
           To continue, open Reactore in your browser.
@@ -108,14 +150,15 @@ export function OpenRedirectPage() {
         <button
           onClick={handleContinue}
           style={{
-            padding: '14px 22px',
-            fontSize: 16,
-            borderRadius: 10,
+            padding: mobile ? '14px 22px' : '16px 26px',
+            fontSize: mobile ? 16 : 18,
+            borderRadius: 12,
             border: 'none',
             background: '#000',
             color: '#fff',
             cursor: 'pointer',
             width: '100%',
+            fontWeight: 500,
           }}
         >
           Continue
@@ -125,20 +168,19 @@ export function OpenRedirectPage() {
         <div
           style={{
             marginTop: 28,
-            paddingTop: 18,
+            paddingTop: 20,
             borderTop: '1px solid #eee',
-            fontSize: 13,
+            fontSize: mobile ? 13 : 14,
             color: '#666',
-            textAlign: 'left',
+            textAlign: 'center',
           }}
         >
-          <p style={{ marginBottom: 8 }}>
+          <p style={{ marginBottom: 6 }}>
             If it doesn’t open automatically:
           </p>
-          <ol style={{ paddingLeft: 18, margin: 0 }}>
-            <li>Tap the <strong>⋯</strong> button (top right)</li>
-            <li>Select <strong>“Open in browser”</strong></li>
-          </ol>
+          <p style={{ margin: 0 }}>
+            Tap <strong>⋯</strong> (top right) → <strong>Open in browser</strong>
+          </p>
         </div>
       </div>
     </div>
