@@ -12,6 +12,7 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [githubNeedsLogout, setGithubNeedsLogout] = useState(false)
 
   /* =========================
      Recruiter Login
@@ -73,9 +74,24 @@ export function LoginPage() {
   const handleGithubLogin = async () => {
     setError(null)
     setLoading(true)
+    setGithubNeedsLogout(false)
     try {
       await loginWithGithub()
     } catch (err) {
+      if (err && typeof err === 'object' && 'code' in err) {
+        const code = String(err.code)
+        if (
+          code === 'auth/account-exists-with-different-credential' ||
+          code === 'auth/account-exists-with-different-provider'
+        ) {
+          setError(
+            'This email is already associated with another login method. Please use the original provider.'
+          )
+          setGithubNeedsLogout(true)
+          return
+        }
+      }
+
       if (
         err &&
         typeof err === 'object' &&
@@ -85,6 +101,7 @@ export function LoginPage() {
         setError(
           'This email is already associated with another login method. Please use the original provider.'
         )
+        setGithubNeedsLogout(true)
       } else {
         setError('GitHub login failed')
       }
@@ -98,7 +115,20 @@ export function LoginPage() {
     setLoading(true)
     try {
       await loginWithGoogle()
-    } catch {
+    } catch (err) {
+      if (err && typeof err === 'object' && 'code' in err) {
+        const code = String(err.code)
+        if (
+          code === 'auth/account-exists-with-different-credential' ||
+          code === 'auth/account-exists-with-different-provider'
+        ) {
+          setError(
+            'This email is already associated with another login method. Please use the original provider.'
+          )
+          return
+        }
+      }
+
       setError('Google login failed')
     } finally {
       setLoading(false)
@@ -159,6 +189,18 @@ export function LoginPage() {
                 <span className="text-base font-bold">GH</span>
                 {loading ? 'Signing in…' : 'Continue with GitHub'}
               </button>
+
+              {githubNeedsLogout && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    window.open('https://github.com/logout', '_blank', 'noopener,noreferrer')
+                  }
+                  className="text-muted-foreground hover:text-foreground text-xs underline underline-offset-4"
+                >
+                  Use another GitHub account
+                </button>
+              )}
 
               <button
                 type="button"

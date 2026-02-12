@@ -41,7 +41,7 @@ export function Header() {
 
       {/* RIGHT */}
       <div className="header-right flex items-center gap-3">
-        {firstName && <span className="header-user">ciao {firstName}</span>}
+        {firstName && <span className="header-user">hi {firstName}</span>}
 
         {/* THEME TOGGLE — SOLO TABLET + DESKTOP */}
         <div className="hidden md:flex">

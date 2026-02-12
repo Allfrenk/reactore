@@ -4,7 +4,11 @@ import { useEffect, useRef } from 'react'
 import { useAppDispatch } from '@/core/app/hooks'
 import { trackAnalyticsEvent } from '@/core/firebase/analytics'
 import { auth } from '@/core/firebase/firebase'
-import { ensureUserRecord, getUserHooks } from '@/features/users/users.repository'
+import {
+  ensureUserRecord,
+  getUserHooks,
+  getUserRecord,
+} from '@/features/users/users.repository'
 import type { AuthProvider } from '@/features/users/users.types'
 import { hydrateHooks } from '@/state/hooksSlice'
 import { clearThemeSelected } from '@/state/themeSlice'
@@ -13,6 +17,8 @@ import { clearUser, setAuthReady, setUserAuth } from '@/state/userSlice'
 type AuthBootstrapProps = {
   children: React.ReactNode
 }
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export function AuthBootstrap({ children }: AuthBootstrapProps) {
   const dispatch = useAppDispatch()
@@ -30,17 +36,36 @@ export function AuthBootstrap({ children }: AuthBootstrapProps) {
 
       void (async () => {
         const providerId = firebaseUser.providerData[0]?.providerId
+        const isRecruiter = providerId === 'password'
+        const email = firebaseUser.email ?? ''
 
-        const record = await ensureUserRecord({
-          uid: firebaseUser.uid,
-          displayName: 'IGNORED',
-          company: 'IGNORED',
-          email: firebaseUser.email ?? '',
-          role: providerId === 'password' ? 'recruiter' : 'user',
-          provider: (providerId === 'password'
-            ? 'recruiter'
-            : (providerId ?? 'unknown')) as AuthProvider,
-        })
+        let record = null as Awaited<ReturnType<typeof getUserRecord>>
+        if (isRecruiter) {
+          record = await getUserRecord(firebaseUser.uid)
+
+          if (!record) {
+            await delay(200)
+            record = await getUserRecord(firebaseUser.uid)
+          }
+
+          if (!record) {
+            await delay(300)
+            record = await getUserRecord(firebaseUser.uid)
+          }
+        }
+
+        if (!record) {
+          record = await ensureUserRecord({
+            uid: firebaseUser.uid,
+            displayName: firebaseUser.displayName ?? (isRecruiter ? 'Recruiter' : 'User'),
+            company: '',
+            email,
+            role: isRecruiter ? 'recruiter' : 'user',
+            provider: (isRecruiter
+              ? 'recruiter'
+              : (providerId ?? 'unknown')) as AuthProvider,
+          })
+        }
 
         dispatch(
           setUserAuth({
