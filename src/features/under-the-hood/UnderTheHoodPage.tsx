@@ -143,6 +143,8 @@ export function UnderTheHoodPage() {
             display: flex;
             flex-direction: column;
             padding-bottom: 4rem;
+            min-width: 0;
+            width: 100%;
           }
 
           @media (min-width: 768px) {
@@ -162,6 +164,7 @@ export function UnderTheHoodPage() {
             font-weight: 600;
             line-height: 1.1;
             font-size: clamp(3rem, 5vw, 4rem);
+            overflow-wrap: break-word;
           }
 
           .uth-hero-desc {
@@ -169,6 +172,7 @@ export function UnderTheHoodPage() {
             margin-top: 1.2rem;
             font-size: 1.05rem;
             color: hsl(var(--muted-foreground));
+            overflow-wrap: break-word;
           }
 
           /* ── Section ── */
@@ -177,6 +181,7 @@ export function UnderTheHoodPage() {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
+            min-width: 0;
           }
 
           @media (min-width: 768px) {
@@ -200,6 +205,14 @@ export function UnderTheHoodPage() {
             font-size: 0.9rem;
             color: hsl(var(--muted-foreground));
             max-width: 42rem;
+            overflow-wrap: break-word;
+          }
+
+          /* ── Grid items: allow shrinking below content min-size ── */
+          .uth-tech-grid > *,
+          .uth-arch-grid > *,
+          .uth-stats-grid > * {
+            min-width: 0;
           }
 
           /* ── Tech grid ── */
@@ -210,11 +223,11 @@ export function UnderTheHoodPage() {
           }
 
           @media (min-width: 560px) {
-            .uth-tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .uth-tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           }
 
           @media (min-width: 1024px) {
-            .uth-tech-grid { grid-template-columns: repeat(3, 1fr); }
+            .uth-tech-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
           }
 
           /* ── Tech card — fixed height so all cards are uniform ── */
@@ -224,6 +237,7 @@ export function UnderTheHoodPage() {
             gap: 0.75rem;
             padding: 1.125rem;
             height: 100%;
+            min-width: 0;
             /* min-height calibrated per breakpoint: enough for longest
                description at narrowest card width (3-col desktop) */
             min-height: 8rem;
@@ -294,6 +308,7 @@ export function UnderTheHoodPage() {
             font-size: 0.8rem;
             line-height: 1.55;
             color: hsl(var(--muted-foreground));
+            overflow-wrap: break-word;
             /* flex-grow pushes description to fill remaining card height */
             flex: 1;
           }
@@ -306,11 +321,11 @@ export function UnderTheHoodPage() {
           }
 
           @media (min-width: 560px) {
-            .uth-arch-grid { grid-template-columns: repeat(2, 1fr); }
+            .uth-arch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           }
 
           @media (min-width: 1024px) {
-            .uth-arch-grid { grid-template-columns: repeat(3, 1fr); }
+            .uth-arch-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
           }
 
           /* ── Arch card — uniform height per breakpoint ── */
@@ -320,6 +335,7 @@ export function UnderTheHoodPage() {
             gap: 0.875rem;
             padding: 1.125rem;
             height: 100%;
+            min-width: 0;
             min-height: 7rem;
           }
 
@@ -351,23 +367,25 @@ export function UnderTheHoodPage() {
             font-size: 0.875rem;
             font-weight: 600;
             margin-bottom: 0.3rem;
+            overflow-wrap: break-word;
           }
 
           .uth-arch-desc {
             font-size: 0.8rem;
             line-height: 1.55;
             color: hsl(var(--muted-foreground));
+            overflow-wrap: break-word;
           }
 
           /* ── Stats grid ── */
           .uth-stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.875rem;
           }
 
-          @media (min-width: 768px) {
-            .uth-stats-grid { grid-template-columns: repeat(4, 1fr); }
+          @media (min-width: 1024px) {
+            .uth-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
           }
 
           /* ── Stat card ── */
@@ -376,6 +394,7 @@ export function UnderTheHoodPage() {
             flex-direction: column;
             gap: 0.3rem;
             padding: 1.125rem;
+            min-width: 0;
           }
 
           .uth-stat-icon { margin-bottom: 0.25rem; }
@@ -389,16 +408,19 @@ export function UnderTheHoodPage() {
           }
 
           .uth-stat-value {
-            font-size: 1.4rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.4rem);
             font-weight: 700;
             font-family: var(--font-mono);
             line-height: 1.15;
+            overflow-wrap: break-word;
+            word-break: break-word;
           }
 
           .uth-stat-sub {
             font-size: 0.68rem;
             font-family: var(--font-mono);
             color: hsl(var(--muted-foreground));
+            overflow-wrap: break-word;
           }
 
           /* ── Inline code ── */
@@ -408,6 +430,8 @@ export function UnderTheHoodPage() {
             background: color-mix(in srgb, currentColor 10%, transparent);
             padding: 0.1em 0.35em;
             border-radius: 4px;
+            overflow-wrap: break-word;
+            word-break: break-all;
           }
         `}</style>
       </section>
