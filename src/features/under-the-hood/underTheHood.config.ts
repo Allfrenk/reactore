@@ -32,6 +32,7 @@ export type ArchItem = {
   icon: LucideIcon
   title: string
   description: string
+  color: string
 }
 
 export const techStack: TechItem[] = [
@@ -115,35 +116,41 @@ export const architectureDecisions: ArchItem[] = [
     title: 'Feature-first structure',
     description:
       'Each feature owns its components, config, hooks, and tests. No shared barrel exports that create circular dependencies.',
+    color: '#818CF8',
   },
   {
     icon: PackageOpen,
     title: 'Route-based lazy loading',
     description:
       'Every page module is a separate JS chunk. The initial payload covers the app shell, auth layer, and vendor libraries — page content arrives on demand as you navigate.',
+    color: '#22D3EE',
   },
   {
     icon: Database,
     title: 'Redux Toolkit',
     description:
       "RTK's createSlice removes action-type boilerplate. Immer lets reducers use mutation syntax while keeping state immutable.",
+    color: '#A78BFA',
   },
   {
     icon: Cloud,
     title: 'Firebase — zero backend',
     description:
       'Google/GitHub OAuth and email auth with no server code. Firestore syncs hook interaction state across sessions; Firebase Hosting serves the SPA.',
+    color: '#FFCA28',
   },
   {
     icon: Gauge,
     title: 'Vite + SWC compilation',
     description:
       'SWC compiles TypeScript ~20× faster than Babel. Manual Rollup chunks keep vendor code separate for better long-term caching.',
+    color: '#646CFF',
   },
   {
     icon: ShieldCheck,
     title: 'Demo + Recruiter modes',
     description:
       'Demo mode is pure Redux — no Firebase writes, session-only. Recruiter mode authenticates against Firebase with email + password.',
+    color: '#34D399',
   },
 ]

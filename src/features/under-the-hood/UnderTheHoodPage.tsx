@@ -13,26 +13,27 @@ const CATEGORY_LABEL: Record<TechCategory, string> = {
   testing: 'Testing',
 }
 
+// Pastel palette complementary to the orange accent (#ff5c39)
 const CATEGORY_COLORS: Record<TechCategory, { text: string; bg: string; border: string }> = {
   runtime: {
-    text: '#2563eb',
-    bg: 'color-mix(in srgb, #2563eb 14%, transparent)',
-    border: 'color-mix(in srgb, #2563eb 28%, transparent)',
+    text: '#818CF8',
+    bg: 'color-mix(in srgb, #818CF8 14%, transparent)',
+    border: 'color-mix(in srgb, #818CF8 28%, transparent)',
   },
   build: {
-    text: '#d97706',
-    bg: 'color-mix(in srgb, #d97706 14%, transparent)',
-    border: 'color-mix(in srgb, #d97706 28%, transparent)',
+    text: '#34D399',
+    bg: 'color-mix(in srgb, #34D399 14%, transparent)',
+    border: 'color-mix(in srgb, #34D399 28%, transparent)',
   },
   infra: {
-    text: '#ea580c',
-    bg: 'color-mix(in srgb, #ea580c 14%, transparent)',
-    border: 'color-mix(in srgb, #ea580c 28%, transparent)',
+    text: '#A78BFA',
+    bg: 'color-mix(in srgb, #A78BFA 14%, transparent)',
+    border: 'color-mix(in srgb, #A78BFA 28%, transparent)',
   },
   testing: {
-    text: '#16a34a',
-    bg: 'color-mix(in srgb, #16a34a 14%, transparent)',
-    border: 'color-mix(in srgb, #16a34a 28%, transparent)',
+    text: '#22D3EE',
+    bg: 'color-mix(in srgb, #22D3EE 14%, transparent)',
+    border: 'color-mix(in srgb, #22D3EE 28%, transparent)',
   },
 }
 
@@ -71,13 +72,13 @@ function ArchCard({ item }: { item: ArchItem }) {
       <div
         className="uth-arch-icon-wrap"
         style={{
-          background: 'color-mix(in srgb, var(--accent-primary) 12%, transparent)',
-          color: 'var(--accent-primary)',
+          background: `${item.color}1a`,
+          color: item.color,
         }}
       >
         <item.icon size={20} strokeWidth={1.75} />
       </div>
-      <div>
+      <div className="uth-arch-body">
         <div className="uth-arch-title">{item.title}</div>
         <p className="uth-arch-desc">{item.description}</p>
       </div>
@@ -91,24 +92,22 @@ export function UnderTheHoodPage() {
   return (
     <PageFade>
       <section className="uth-root">
-        {/* HEADER */}
-        <header className="uth-header">
-          <div className="uth-title-row">
-            <h1 className="uth-title">Under the Hood</h1>
-          </div>
-          <p className="uth-subtitle">
+        {/* HEADER — matches YourStorePage hero layout */}
+        <header className="uth-hero">
+          <h1 className="uth-hero-title">Under the Hood</h1>
+          <p className="uth-hero-desc">
             Tools, architecture decisions, and live build stats behind this app — for the curious.
           </p>
         </header>
 
         {/* TECH STACK */}
         <section className="uth-section">
-          <header className="uth-section-header">
+          <div className="uth-section-header">
             <h2 className="uth-section-title">Tech Stack</h2>
             <p className="uth-section-subtitle">
               Nine carefully chosen tools — each with a clear reason to be here.
             </p>
-          </header>
+          </div>
           <div className="uth-tech-grid">
             {techStack.map(item => (
               <TiltCardWrapper key={item.name} tiltIntensity="soft">
@@ -120,12 +119,12 @@ export function UnderTheHoodPage() {
 
         {/* ARCHITECTURE DECISIONS */}
         <section className="uth-section">
-          <header className="uth-section-header">
+          <div className="uth-section-header">
             <h2 className="uth-section-title">Architecture Decisions</h2>
             <p className="uth-section-subtitle">
               The structural choices that keep the codebase maintainable and fast.
             </p>
-          </header>
+          </div>
           <div className="uth-arch-grid">
             {architectureDecisions.map(item => (
               <TiltCardWrapper key={item.title} tiltIntensity="soft">
@@ -143,7 +142,6 @@ export function UnderTheHoodPage() {
           .uth-root {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
             padding-bottom: 4rem;
           }
 
@@ -153,46 +151,55 @@ export function UnderTheHoodPage() {
             }
           }
 
-          /* ── Header — mirrors HookPageLayout exactly ── */
-          .uth-header {
+          /* ── Hero — mirrors YourStorePage hero layout ── */
+          .uth-hero {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
           }
-          .uth-title-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-          }
-          .uth-title {
-            font-size: clamp(2rem, 3.2vw, 2.6rem);
+
+          .uth-hero-title {
+            max-width: 56rem;
             font-weight: 600;
-            line-height: 1.2;
+            line-height: 1.1;
+            font-size: clamp(3rem, 5vw, 4rem);
           }
-          .uth-subtitle {
-            color: hsl(var(--muted-foreground));
+
+          .uth-hero-desc {
             max-width: 46rem;
+            margin-top: 1.2rem;
+            font-size: 1.05rem;
+            color: hsl(var(--muted-foreground));
           }
 
           /* ── Section ── */
           .uth-section {
+            margin-top: 3.2rem;
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.2rem;
           }
+
+          @media (min-width: 768px) {
+            .uth-section {
+              margin-top: 4rem;
+            }
+          }
+
           .uth-section-header {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
           }
+
           .uth-section-title {
-            font-size: 1.15rem;
+            font-size: 1.4rem;
             font-weight: 600;
           }
+
           .uth-section-subtitle {
-            font-size: 0.875rem;
+            margin-top: 0.3rem;
+            font-size: 0.9rem;
             color: hsl(var(--muted-foreground));
+            max-width: 42rem;
           }
 
           /* ── Tech grid ── */
@@ -201,26 +208,41 @@ export function UnderTheHoodPage() {
             grid-template-columns: 1fr;
             gap: 0.875rem;
           }
+
           @media (min-width: 560px) {
             .uth-tech-grid { grid-template-columns: repeat(2, 1fr); }
           }
+
           @media (min-width: 1024px) {
             .uth-tech-grid { grid-template-columns: repeat(3, 1fr); }
           }
 
-          /* ── Tech card ── */
+          /* ── Tech card — fixed height so all cards are uniform ── */
           .uth-tech-card {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             padding: 1.125rem;
             height: 100%;
+            /* min-height calibrated per breakpoint: enough for longest
+               description at narrowest card width (3-col desktop) */
+            min-height: 8rem;
           }
+
+          @media (min-width: 560px) {
+            .uth-tech-card { min-height: 9.5rem; }
+          }
+
+          @media (min-width: 1024px) {
+            .uth-tech-card { min-height: 11rem; }
+          }
+
           .uth-tech-card-top {
             display: flex;
             align-items: center;
             gap: 0.75rem;
           }
+
           .uth-tech-icon-wrap {
             flex-shrink: 0;
             display: flex;
@@ -230,12 +252,14 @@ export function UnderTheHoodPage() {
             height: 2.5rem;
             border-radius: 0.75rem;
           }
+
           .uth-tech-meta {
             flex: 1;
             min-width: 0;
             display: flex;
             flex-direction: column;
           }
+
           .uth-tech-name {
             font-size: 0.875rem;
             font-weight: 600;
@@ -243,28 +267,35 @@ export function UnderTheHoodPage() {
             overflow: hidden;
             text-overflow: ellipsis;
           }
+
           .uth-tech-version {
             font-size: 0.68rem;
             font-family: var(--font-mono);
             color: hsl(var(--muted-foreground));
           }
+
+          /* Category badge — aligned to hook-badge sizing for consistency */
           .uth-cat-badge {
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
-            padding: 0.18rem 0.55rem;
+            padding: 0.22rem 0.7rem;
             border-radius: 999px;
-            font-size: 0.6rem;
+            font-size: 0.68rem;
             font-weight: 600;
             letter-spacing: 0.06em;
             text-transform: uppercase;
             font-family: var(--font-mono);
             white-space: nowrap;
+            line-height: 1;
           }
+
           .uth-tech-desc {
             font-size: 0.8rem;
             line-height: 1.55;
             color: hsl(var(--muted-foreground));
+            /* flex-grow pushes description to fill remaining card height */
+            flex: 1;
           }
 
           /* ── Arch grid ── */
@@ -273,20 +304,33 @@ export function UnderTheHoodPage() {
             grid-template-columns: 1fr;
             gap: 0.875rem;
           }
+
           @media (min-width: 560px) {
             .uth-arch-grid { grid-template-columns: repeat(2, 1fr); }
           }
+
           @media (min-width: 1024px) {
             .uth-arch-grid { grid-template-columns: repeat(3, 1fr); }
           }
 
-          /* ── Arch card ── */
+          /* ── Arch card — uniform height per breakpoint ── */
           .uth-arch-card {
             display: flex;
             align-items: flex-start;
             gap: 0.875rem;
             padding: 1.125rem;
+            height: 100%;
+            min-height: 7rem;
           }
+
+          @media (min-width: 560px) {
+            .uth-arch-card { min-height: 8rem; }
+          }
+
+          @media (min-width: 1024px) {
+            .uth-arch-card { min-height: 9rem; }
+          }
+
           .uth-arch-icon-wrap {
             flex-shrink: 0;
             display: flex;
@@ -297,11 +341,18 @@ export function UnderTheHoodPage() {
             border-radius: 0.625rem;
             margin-top: 0.05rem;
           }
+
+          .uth-arch-body {
+            flex: 1;
+            min-width: 0;
+          }
+
           .uth-arch-title {
             font-size: 0.875rem;
             font-weight: 600;
             margin-bottom: 0.3rem;
           }
+
           .uth-arch-desc {
             font-size: 0.8rem;
             line-height: 1.55;
@@ -314,6 +365,7 @@ export function UnderTheHoodPage() {
             grid-template-columns: 1fr 1fr;
             gap: 0.875rem;
           }
+
           @media (min-width: 768px) {
             .uth-stats-grid { grid-template-columns: repeat(4, 1fr); }
           }
@@ -325,7 +377,9 @@ export function UnderTheHoodPage() {
             gap: 0.3rem;
             padding: 1.125rem;
           }
+
           .uth-stat-icon { margin-bottom: 0.25rem; }
+
           .uth-stat-label {
             font-size: 0.65rem;
             font-family: var(--font-mono);
@@ -333,12 +387,14 @@ export function UnderTheHoodPage() {
             letter-spacing: 0.07em;
             color: hsl(var(--muted-foreground));
           }
+
           .uth-stat-value {
             font-size: 1.4rem;
             font-weight: 700;
             font-family: var(--font-mono);
             line-height: 1.15;
           }
+
           .uth-stat-sub {
             font-size: 0.68rem;
             font-family: var(--font-mono);

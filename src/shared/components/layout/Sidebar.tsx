@@ -24,7 +24,7 @@ export function Sidebar() {
     (sidebarOpen ? 'opacity-100' : 'opacity-0')
 
   return (
-    <nav className="flex h-full w-full flex-col gap-6 p-4 pb-20">
+    <nav className="flex w-full flex-col gap-6 p-4 pb-20">
       <div className="flex flex-col gap-6">
         {sidebarConfig.map(entry => {
           const Icon = entry.icon
