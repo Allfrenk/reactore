@@ -4,6 +4,7 @@ import { FadeUp } from '@/shared/components/ui/FadeUp'
 import { PageFade } from '@/shared/components/ui/PageFade'
 import { TiltCardWrapper } from '@/shared/components/ui/TiltCardWrapper'
 import { useAuth } from '@/shared/hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 export function HomePage() {
   const { user } = useAuth()
@@ -27,9 +28,9 @@ export function HomePage() {
 
           <p className="hero-cta">
             Start from{' '}
-            <a href="/hooks/useState" className="hero-cta-link">
+            <Link to="/hooks/useState" className="hero-cta-link">
               useState
-            </a>{' '}
+            </Link>{' '}
             →
           </p>
 

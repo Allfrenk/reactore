@@ -11,7 +11,6 @@ import {
 } from '@/features/users/users.repository'
 import type { AuthProvider } from '@/features/users/users.types'
 import { hydrateHooks } from '@/state/hooksSlice'
-import { clearThemeSelected } from '@/state/themeSlice'
 import { clearUser, setAuthReady, setUserAuth } from '@/state/userSlice'
 
 type AuthBootstrapProps = {
@@ -29,7 +28,6 @@ export function AuthBootstrap({ children }: AuthBootstrapProps) {
       if (!firebaseUser) {
         loginTrackedRef.current = false
         dispatch(clearUser())
-        dispatch(clearThemeSelected())
         dispatch(setAuthReady())
         return
       }
