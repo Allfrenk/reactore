@@ -93,7 +93,16 @@ export function AuthBootstrap({ children }: AuthBootstrapProps) {
 
         dispatch(setAuthReady())
       })().catch(err => {
-        console.error('[AuthBootstrap] Fatal error', err)
+        console.error('[AuthBootstrap] Firestore error — falling back to minimal user state', err)
+        // Fallback: set user from Firebase Auth data alone so the app is still usable
+        dispatch(
+          setUserAuth({
+            uid: firebaseUser.uid,
+            displayName: firebaseUser.displayName ?? null,
+            role: firebaseUser.providerData[0]?.providerId === 'password' ? 'recruiter' : 'user',
+            company: '',
+          })
+        )
         dispatch(setAuthReady())
       })
     })

@@ -6,46 +6,41 @@ export function UseMemoExplain() {
 
   return (
     <ExplainCard title={title} subtitle={subtitle}>
-      {/* TECHNICAL */}
       <p>
-        <code>useMemo</code> allows React to <strong>cache the result</strong> of a
-        computation. The function passed to <code>useMemo</code> is executed again only
-        when one of its dependencies changes.
+        <code>useMemo</code> caches the <strong>return value</strong> of a function and
+        reuses it on the next render — unless one of its listed dependencies has changed.
+        The component still re-renders; only the expensive calculation is skipped.
       </p>
 
       <p>
-        This means that <strong>re-renders still happen</strong>, but the expensive
-        calculation does not run again if its inputs are the same.
-      </p>
-
-      <p>
-        Without <code>useMemo</code>, every render executes the computation again — even
-        if the component re-renders for unrelated reasons.
+        Without it, every render calls the function from scratch — even when the inputs
+        are identical and the result would be exactly the same. For cheap calculations
+        this is harmless. For heavy computations (sorting large lists, running complex
+        math), it adds up quickly.
       </p>
 
       <pre className="glass-inset overflow-x-auto p-3 text-xs">
         <code>{codeExample}</code>
       </pre>
 
-      {/* IMPORTANT CLARIFICATION */}
       <p>
-        <strong>Important:</strong> <code>useMemo</code> is a performance optimization,
-        not a logic tool. It should be used only when a computation is expensive and you
-        have measured or observed unnecessary recalculations.
+        <strong>Use it deliberately, not by default.</strong> Memoization has its own
+        cost — React must store the result and compare dependencies on every render. If
+        the calculation is cheap or the input changes frequently, you gain nothing and add
+        complexity. Measure first, optimize second.
       </p>
 
-      {/* CHILD LEVEL */}
       <p>
-        <strong>Like explaining to a child:</strong> imagine you solve a very hard puzzle.
-        If the puzzle doesn’t change, it makes no sense to solve it again every time
-        someone walks into the room. <code>useMemo</code> lets React keep the answer in
-        its pocket and reuse it until the puzzle changes.
+        To memoize a <strong>function reference</strong> instead of a computed value, use{' '}
+        <code>useCallback</code> — it follows the exact same pattern.
       </p>
 
-      {/* CONNECTION */}
       <p>
-        If you need to <strong>memoize functions instead of values</strong>, you will use
-        a similar hook called <code>useCallback</code>.
+        <strong>Like explaining to a child:</strong> you spent an hour solving a really
+        hard puzzle. Someone asks "what does the finished puzzle look like?" — instead of
+        taking it apart and rebuilding it, you take a photo. Next time someone asks, you
+        just show the photo. <code>useMemo</code> is that photo: React keeps it in its
+        pocket and only tears the puzzle apart again when the pieces actually change.
       </p>
     </ExplainCard>
   )

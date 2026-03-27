@@ -11,6 +11,7 @@ export function UseStatePage() {
       <HookPageLayout
         title={useStateConfig.meta.title}
         description={useStateConfig.meta.description}
+        badge="essential"
         action={
           <TiltCardWrapper>
             <UseStateAction />

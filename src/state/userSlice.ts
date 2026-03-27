@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-export type UserRole = 'user' | 'recruiter'
+export type UserRole = 'user' | 'recruiter' | 'demo'
 
 type UserState = {
   user: {
@@ -11,11 +11,13 @@ type UserState = {
     company: string
   } | null
   loading: boolean
+  isDemoMode: boolean
 }
 
 const initialState: UserState = {
   user: null,
   loading: true,
+  isDemoMode: false,
 }
 
 const userSlice = createSlice({
@@ -25,8 +27,19 @@ const userSlice = createSlice({
     setUserAuth(state, action: PayloadAction<UserState['user']>) {
       state.user = action.payload
     },
+    setDemoMode(state, action: PayloadAction<{ displayName: string; company: string }>) {
+      state.isDemoMode = true
+      state.loading = false
+      state.user = {
+        uid: '',
+        displayName: action.payload.displayName || 'Guest',
+        role: 'demo',
+        company: action.payload.company,
+      }
+    },
     clearUser(state) {
       state.user = null
+      state.isDemoMode = false
     },
     setAuthReady(state) {
       state.loading = false
@@ -34,5 +47,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { setUserAuth, clearUser, setAuthReady } = userSlice.actions
+export const { setUserAuth, setDemoMode, clearUser, setAuthReady } = userSlice.actions
 export default userSlice.reducer

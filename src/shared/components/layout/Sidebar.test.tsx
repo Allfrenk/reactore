@@ -16,7 +16,7 @@ describe('Sidebar', () => {
 
   it('activates Code icon when a hooks child route is active', () => {
     renderWithProviders(<Sidebar />, {
-      route: '/hooks/use-state',
+      route: '/hooks/useState',
     })
 
     const codeIcon = screen.getByLabelText(/hooks playground/i)
@@ -26,7 +26,7 @@ describe('Sidebar', () => {
 
   it('highlights useState text when active', () => {
     renderWithProviders(<Sidebar />, {
-      route: '/hooks/use-state',
+      route: '/hooks/useState',
     })
 
     const useStateLink = screen.getByLabelText(/usestate/i)
@@ -35,7 +35,7 @@ describe('Sidebar', () => {
 
   it('does NOT highlight Hooks Playground title when a child is active', () => {
     renderWithProviders(<Sidebar />, {
-      route: '/hooks/use-state',
+      route: '/hooks/useState',
     })
 
     const title = screen.getByText(/hooks playground/i)

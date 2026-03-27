@@ -11,6 +11,7 @@ export function UseCallbackPage() {
       <HookPageLayout
         title={useCallbackConfig.meta.title}
         description={useCallbackConfig.meta.description}
+        badge="performance"
         action={
           <TiltCardWrapper>
             <UseCallbackAction />

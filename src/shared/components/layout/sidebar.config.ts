@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { Box, Home, Link } from 'lucide-react'
+import { Box, CircuitBoard, Home, Link } from 'lucide-react'
 
 type SidebarItem = {
   type: 'item'
@@ -37,8 +37,11 @@ export const sidebarConfig: Array<SidebarItem | SidebarGroup> = [
     children: [
       { label: 'useState', to: '/hooks/useState' },
       { label: 'useEffect', to: '/hooks/useEffect' },
-      { label: 'useMemo', to: '/hooks/useMemo', badge: 'new' },
-      { label: 'useCallback', to: '/hooks/useCallback', badge: 'new' },
+      { label: 'useMemo', to: '/hooks/useMemo' },
+      { label: 'useCallback', to: '/hooks/useCallback' },
+      { label: 'useRef', to: '/hooks/useRef', badge: 'new' },
+      { label: 'useReducer', to: '/hooks/useReducer', badge: 'new' },
+      { label: 'useContext', to: '/hooks/useContext', badge: 'new' },
     ],
   },
   {
@@ -59,5 +62,11 @@ export const sidebarConfig: Array<SidebarItem | SidebarGroup> = [
         badge: 'new',
       },
     ],
+  },
+  {
+    type: 'item',
+    label: 'Under the Hood',
+    to: '/stack',
+    icon: CircuitBoard,
   },
 ] as const

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
 import { useAnalyticsPageView } from '@/core/firebase/useAnalyticsPageView'
-import { useScrollToTop } from '@/shared/hooks/usescrollTotop'
+import { useScrollToTop } from '@/shared/hooks/useScrollToTop'
 import { useSidebarSwipe } from '@/shared/hooks/useSidebarSwipe'
 import { closeSidebar } from '@/state/layoutSlice'
 import { Footer } from './Footer'
@@ -39,7 +39,7 @@ export function AppShell({ header, sidebar, children }: AppShellProps) {
             )}
 
             <aside
-              className={`app-sidebar fixed top-[clamp(56px,6vw,72px)] bottom-0 left-0 z-40 w-[clamp(200px,55vw,240px)] overflow-y-auto transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:static md:h-full md:translate-x-0 md:transition-[width,opacity] md:duration-300 md:ease-in-out ${
+              className={`app-sidebar no-scrollbar fixed top-[clamp(56px,6vw,72px)] bottom-0 left-0 z-40 w-[clamp(200px,55vw,240px)] overflow-y-auto transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:static md:h-full md:translate-x-0 md:transition-[width,opacity] md:duration-300 md:ease-in-out ${
                 sidebarOpen ? 'md:w-[clamp(260px,28vw,300px)] lg:w-[320px]' : 'md:w-0'
               } `}
             >

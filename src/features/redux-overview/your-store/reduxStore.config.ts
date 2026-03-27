@@ -6,10 +6,18 @@ export type ReduxStoreItem = {
   key: string
   title: string
   description: string
-  selector: (state: RootState) => string | number
+  selector: (state: RootState) => string
   to: string
 }
 
+export type LocalHookItem = {
+  key: string
+  title: string
+  description: string
+  to: string
+}
+
+// Hooks whose state is persisted in the Redux store
 export const reduxHooksConfig: ReduxStoreItem[] = [
   {
     key: 'useState',
@@ -38,5 +46,27 @@ export const reduxHooksConfig: ReduxStoreItem[] = [
     description: 'Memoizes callback functions.',
     selector: state => state.hooks.data.useCallback.value,
     to: '/hooks/useCallback',
+  },
+]
+
+// Hooks whose demos use local component state — not persisted in the store
+export const localHooksConfig: LocalHookItem[] = [
+  {
+    key: 'useRef',
+    title: 'useRef',
+    description: 'DOM access and mutable values — session only.',
+    to: '/hooks/useRef',
+  },
+  {
+    key: 'useReducer',
+    title: 'useReducer',
+    description: 'Reducer-driven counter — session only.',
+    to: '/hooks/useReducer',
+  },
+  {
+    key: 'useContext',
+    title: 'useContext',
+    description: 'Shared context across a subtree — session only.',
+    to: '/hooks/useContext',
   },
 ]

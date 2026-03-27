@@ -1,5 +1,7 @@
 // src/shared/components/cards/ReduxStoreCard.tsx
 
+import { useCardTilt } from '@/shared/hooks/useCardTilt'
+
 type ReduxStoreCardProps = {
   title: string
   value: string | number
@@ -13,13 +15,18 @@ export function ReduxStoreCard({
   description,
   onClick,
 }: ReduxStoreCardProps) {
+  const tilt = useCardTilt<HTMLButtonElement>()
   const isHook = title.startsWith('use')
   const hookName = isHook ? title.slice(3) : title
 
   return (
     <button
+      ref={tilt.ref}
       type="button"
       onClick={onClick}
+      onMouseEnter={tilt.onMouseEnter}
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
       className="group /* Card proportions */ border-border/70 /* base padding */ /* 👉 mobile: più respiro a destra */ aspect-4/1 w-full cursor-pointer rounded-2xl border bg-(--bg-surface) p-4 pr-5 text-left shadow-[0_10px_30px_rgb(0_0_0/0.10)] transition-shadow duration-300 hover:shadow-[0_14px_40px_rgb(0_0_0/0.14),0_0_0_1px_rgb(var(--accent-primary)/0.20)] sm:aspect-3/1 lg:aspect-4/3"
     >
       {/*

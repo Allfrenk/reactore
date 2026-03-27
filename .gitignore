@@ -21,6 +21,7 @@ dist-ssr/
 # ===============================
 .env
 .env.local
+.env.production
 .env.*.local
 *.local
 
@@ -46,3 +47,18 @@ coverage/
 # Firebase local cache
 # ===============================
 .firebase/
+
+# ===============================
+# Claude Code
+# ===============================
+.claude/
+
+# ===============================
+# Sensitive credentials
+# ===============================
+*.pem
+*.key
+serviceAccountKey*.json
+*-service-account*.json
+firebase-adminsdk*.json
+secrets.json

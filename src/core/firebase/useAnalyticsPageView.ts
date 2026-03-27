@@ -54,4 +54,21 @@ export function useAnalyticsPageView() {
       })
     }
   }, [location.pathname])
+
+  // 🔒 Traccia page_time anche se l'utente chiude il tab
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (lastPageRef.current && startTimeRef.current) {
+        const duration = Date.now() - startTimeRef.current
+        const bucket = getTimeBucket(duration)
+        void trackAnalyticsEvent('page_time', {
+          page_name: lastPageRef.current,
+          time_bucket: bucket,
+        })
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [])
 }

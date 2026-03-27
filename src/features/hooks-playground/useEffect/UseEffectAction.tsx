@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@/core/app/hooks'
-import { trackPageInteraction } from '@/core/firebase/trakPageInteraction'
+import { trackPageInteraction } from '@/core/firebase/trackPageInteraction'
 import { useEffectConfig } from '@/features/hooks-playground/config/useEffect.config'
 import { ActionCard } from '@/shared/components/cards/ActionCard'
 import { updateHookValue } from '@/state/hooksSlice'

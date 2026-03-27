@@ -31,7 +31,7 @@ function normalizeCompany(input: string): string {
   return input.trim().replace(/\s+/g, ' ').toUpperCase()
 }
 
-function buildRecruiterEmail(displayName: string, company: string) {
+function buildRecruiterEmail(displayName: string, company: string): string {
   const name = slugify(displayName)
   const comp = slugify(company)
 
@@ -79,23 +79,26 @@ export const loginAsRecruiter = async (params: {
   company: string
   password: string
 }) => {
+  const expectedPassword = import.meta.env.VITE_RECRUITER_PASSWORD as string
+
+  if (!params.password || params.password !== expectedPassword) {
+    const err = new Error('auth/wrong-password')
+    ;(err as Error & { code: string }).code = 'auth/wrong-password'
+    throw err
+  }
+
   const displayName = normalizeDisplayName(params.displayName)
   const company = normalizeCompany(params.company)
-
-  const password = params.password
-
   const email = buildRecruiterEmail(displayName, company)
 
-  // stato pulito
   await signOut(auth)
 
   try {
-    // 1️⃣ PROVA A CREARE (caso: primo accesso)
-    const res = await createUserWithEmailAndPassword(auth, email, password)
-    const user = res.user
+    // 1️⃣ First visit — create account
+    const res = await createUserWithEmailAndPassword(auth, email, expectedPassword)
 
     await upsertUser({
-      uid: user.uid,
+      uid: res.user.uid,
       displayName,
       company,
       email,
@@ -105,18 +108,17 @@ export const loginAsRecruiter = async (params: {
 
     return res
   } catch (err: unknown) {
-    // 2️⃣ SE ESISTE → LOGIN
+    // 2️⃣ Returning recruiter — sign in directly
     if (
       err &&
       typeof err === 'object' &&
       'code' in err &&
       err.code === 'auth/email-already-in-use'
     ) {
-      const res = await signInWithEmailAndPassword(auth, email, password)
-      const user = res.user
+      const res = await signInWithEmailAndPassword(auth, email, expectedPassword)
 
       await upsertUser({
-        uid: user.uid,
+        uid: res.user.uid,
         displayName,
         company,
         email,
@@ -127,7 +129,6 @@ export const loginAsRecruiter = async (params: {
       return res
     }
 
-    // altri errori reali
     throw err
   }
 }

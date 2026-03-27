@@ -11,6 +11,7 @@ export function UseEffectPage() {
       <HookPageLayout
         title={useEffectConfig.meta.title}
         description={useEffectConfig.meta.description}
+        badge="essential"
         action={
           <TiltCardWrapper>
             <UseEffectAction />

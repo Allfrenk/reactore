@@ -20,11 +20,11 @@ export function Sidebar() {
     }`
 
   const labelClass =
-    `absolute left-[60px] text-sm font-medium whitespace-nowrap transition-opacity duration-200 ` +
+    `absolute left-[60px] text-sm font-medium whitespace-nowrap transition-opacity duration-200 text-muted-foreground ` +
     (sidebarOpen ? 'opacity-100' : 'opacity-0')
 
   return (
-    <nav className="flex h-full w-full flex-col gap-6 p-4">
+    <nav className="flex h-full w-full flex-col gap-6 p-4 pb-20">
       <div className="flex flex-col gap-6">
         {sidebarConfig.map(entry => {
           const Icon = entry.icon
@@ -40,7 +40,7 @@ export function Sidebar() {
                 onClick={handleNavigate}
                 className="relative flex h-12 items-center"
               >
-                <div className={iconButtonClass(isActive)}>
+                <div className={iconButtonClass(isActive)} aria-label={entry.label}>
                   <Icon size={22} strokeWidth={1.75} />
                 </div>
 
@@ -52,6 +52,7 @@ export function Sidebar() {
                   <NavLink
                     key={child.to}
                     to={child.to}
+                    aria-label={child.label}
                     onClick={handleNavigate}
                     className={({ isActive }) =>
                       `ml-[60px] flex items-center gap-2 py-2 text-sm font-medium whitespace-nowrap transition-opacity duration-200 ${

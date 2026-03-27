@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users — each user can only read/write their own document
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Invites — read: public (the code itself is the secret, only shared by admin)
+    //           update: authenticated user can only flip used=false → used=true
+    //           create/delete: admin only (via Firebase Console)
+    match /invites/{code} {
+      allow read: if true;
+      allow update: if request.auth != null
+        && resource.data.used == false
+        && request.resource.data.used == true
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['used', 'usedBy', 'usedAt']);
+      allow create, delete: if false;
+    }
+  }
+}

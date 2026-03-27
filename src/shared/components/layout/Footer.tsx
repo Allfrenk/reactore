@@ -1,4 +1,4 @@
-import { BuyMeACoffeeButton } from '../general/BuyMeACoffeeButton'
+// import { BuyMeACoffeeButton } from '../general/BuyMeACoffeeButton'
 
 export function Footer() {
   const mailTo = 'mailto:ale.cata.it@gmail.com?subject=Reactore%20-%20Contact'
@@ -63,9 +63,9 @@ export function Footer() {
           </div>
 
           {/* RIGHT – BUY ME A COFFEE */}
-          <div className="footer-bmc">
+          {/* <div className="footer-bmc">
             <BuyMeACoffeeButton />
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

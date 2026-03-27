@@ -6,52 +6,44 @@ export function UseCallbackExplain() {
 
   return (
     <ExplainCard title={title} subtitle={subtitle}>
-      {/* TECHNICAL EXPLANATION */}
       <p>
-        <code>useCallback</code> is used to memoize a function reference. React will
-        return the <strong>same function instance</strong> between renders, as long as its
-        dependency list doesn’t change.
+        In JavaScript, every time a function is declared it creates a{' '}
+        <strong>new object in memory</strong>. This means that on every render, a function
+        defined inside a component gets a brand-new reference — even if its code is
+        identical to the one from the previous render.
       </p>
 
       <p>
-        This matters when you pass functions as props to child components. In JavaScript,
-        functions are objects: creating a new function means creating a new reference.
+        This only becomes a problem when you pass that function as a prop to a memoized
+        child (one wrapped in <code>React.memo</code>). The child compares its previous
+        props with the new ones. If the function reference changed, the comparison fails
+        and the child re-renders — even though nothing actually changed in behaviour.
       </p>
 
       <p>
-        If a child component is memoized (for example with <code>React.memo</code>), a new
-        function reference will still cause it to re-render, even if the logic inside the
-        function is identical.
+        <code>useCallback</code> solves this by returning the{' '}
+        <strong>same function reference</strong> across renders, as long as its
+        dependencies stay the same. The memoized child sees the same prop it had before
+        and skips the re-render.
       </p>
 
       <pre className="glass-inset overflow-x-auto p-3 text-xs">
         <code>{codeExample}</code>
       </pre>
 
-      {/* DIDACTIC: CHILD FOCUS */}
       <p>
-        In the example above, the child component receives a callback as a prop. When{' '}
-        <code>useCallback</code> is enabled, the function reference stays the same across
-        parent re-renders, so the child does <strong>not</strong> re-render.
+        <strong>Don't overuse it.</strong> If the child is not memoized, or if the
+        function changes on every render anyway (because a dependency changes), wrapping
+        it in <code>useCallback</code> adds overhead with no benefit.
       </p>
 
       <p>
-        When <code>useCallback</code> is disabled, a new function is created on every
-        parent render. Even if the child is memoized, React sees the prop as “changed” and
-        re-renders the child.
-      </p>
-
-      {/* CHILD LEVEL EXPLANATION */}
-      <p>
-        <strong>Like explaining to a child:</strong> imagine giving someone a remote
-        control. If you hand them the <em>same</em> remote every time, they know nothing
-        changed. If you give them a <em>new</em> remote each time, they think something is
-        different — even if the buttons do the same things.
-      </p>
-
-      <p>
-        <code>useCallback</code> makes sure you keep giving the same remote, until the
-        buttons actually need to change.
+        <strong>Like explaining to a child:</strong> you give your friend a remote control
+        for the TV. Every time you walk into the room you hand them a new remote —
+        identical buttons, same channels — but they think something changed and re-read
+        the whole manual. <code>useCallback</code> makes sure you hand them the{' '}
+        <em>same physical remote</em> every time. Only when you genuinely need to add a
+        new button do you swap it for a different one.
       </p>
     </ExplainCard>
   )

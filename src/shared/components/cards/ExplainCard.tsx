@@ -1,3 +1,5 @@
+import { useCardTilt } from '@/shared/hooks/useCardTilt'
+
 type ExplainCardProps = {
   title: string
   subtitle?: string
@@ -11,8 +13,14 @@ export function ExplainCard({
   children,
   className = '',
 }: ExplainCardProps) {
+  const tilt = useCardTilt<HTMLElement>()
+
   return (
     <section
+      ref={tilt.ref}
+      onMouseEnter={tilt.onMouseEnter}
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
       className={`glass-card rounded-2xl p-6 transition-shadow duration-300 hover:shadow-[0_14px_40px_rgb(0_0_0/0.14),0_0_0_1px_rgb(var(--accent-primary)/0.22)] ${className} `}
     >
       <header className="mb-5 flex flex-col gap-1">

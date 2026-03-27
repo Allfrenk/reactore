@@ -11,6 +11,7 @@ export function UseMemoPage() {
       <HookPageLayout
         title={useMemoConfig.meta.title}
         description={useMemoConfig.meta.description}
+        badge="performance"
         action={
           <TiltCardWrapper>
             <UseMemoAction />

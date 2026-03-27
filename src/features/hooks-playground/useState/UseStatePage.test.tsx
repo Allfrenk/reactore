@@ -7,6 +7,6 @@ describe('UseStatePage', () => {
   it('renders the page title', () => {
     renderWithProviders(<UseStatePage />)
 
-    expect(screen.getByRole('heading', { name: /usestate/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /usestate/i, level: 1 })).toBeInTheDocument()
   })
 })

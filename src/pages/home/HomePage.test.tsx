@@ -7,6 +7,6 @@ describe('HomePage', () => {
   it('renders title and description', () => {
     renderWithProviders(<HomePage />)
 
-    expect(screen.getByRole('heading', { name: /home/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /didactic/i })).toBeInTheDocument()
   })
 })

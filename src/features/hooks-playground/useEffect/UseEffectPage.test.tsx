@@ -7,6 +7,6 @@ describe('UseEffectPage', () => {
   it('renders the page title', () => {
     renderWithProviders(<UseEffectPage />)
 
-    expect(screen.getByRole('heading', { name: /useeffect/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /useeffect/i, level: 1 })).toBeInTheDocument()
   })
 })

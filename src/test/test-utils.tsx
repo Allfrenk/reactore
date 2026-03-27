@@ -5,13 +5,17 @@ import type { ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
+import hooksReducer from '@/state/hooksSlice'
 import layoutReducer from '@/state/layoutSlice'
 import themeReducer from '@/state/themeSlice'
+import userReducer from '@/state/userSlice'
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: {
     theme?: ReturnType<typeof themeReducer>
     layout?: ReturnType<typeof layoutReducer>
+    user?: ReturnType<typeof userReducer>
+    hooks?: ReturnType<typeof hooksReducer>
   }
   route?: string
 }
@@ -24,6 +28,8 @@ export function renderWithProviders(
     reducer: {
       theme: themeReducer,
       layout: layoutReducer,
+      user: userReducer,
+      hooks: hooksReducer,
     },
     preloadedState: preloadedState as Parameters<
       typeof configureStore

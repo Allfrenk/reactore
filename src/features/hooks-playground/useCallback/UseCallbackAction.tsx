@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import { trackPageInteraction } from '@/core/firebase/trakPageInteraction'
+import { trackPageInteraction } from '@/core/firebase/trackPageInteraction'
 import { useCallbackConfig } from '@/features/hooks-playground/config/useCallback.config'
 import { ActionCard } from '@/shared/components/cards/ActionCard'
 
