@@ -1,6 +1,5 @@
 import { PageFade } from '@/shared/components/ui/PageFade'
 import { TiltCardWrapper } from '@/shared/components/ui/TiltCardWrapper'
-import { CircuitBoard } from 'lucide-react'
 import { BuildStatsSection } from './BuildStatsSection'
 import type { ArchItem, TechCategory, TechItem } from './underTheHood.config'
 import { architectureDecisions, techStack } from './underTheHood.config'
@@ -95,11 +94,6 @@ export function UnderTheHoodPage() {
         {/* HEADER */}
         <header className="uth-header">
           <div className="uth-title-row">
-            <CircuitBoard
-              size={28}
-              strokeWidth={1.5}
-              style={{ color: 'var(--accent-primary)', flexShrink: 0 }}
-            />
             <h1 className="uth-title">Under the Hood</h1>
           </div>
           <p className="uth-subtitle">
@@ -149,11 +143,17 @@ export function UnderTheHoodPage() {
           .uth-root {
             display: flex;
             flex-direction: column;
-            gap: 3.5rem;
-            padding-bottom: 5rem;
+            gap: 2rem;
+            padding-bottom: 4rem;
           }
 
-          /* ── Header ── */
+          @media (min-width: 768px) {
+            .uth-root {
+              padding-bottom: 6rem;
+            }
+          }
+
+          /* ── Header — mirrors HookPageLayout exactly ── */
           .uth-header {
             display: flex;
             flex-direction: column;
@@ -163,6 +163,7 @@ export function UnderTheHoodPage() {
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            flex-wrap: wrap;
           }
           .uth-title {
             font-size: clamp(2rem, 3.2vw, 2.6rem);
@@ -171,7 +172,7 @@ export function UnderTheHoodPage() {
           }
           .uth-subtitle {
             color: hsl(var(--muted-foreground));
-            max-width: 52rem;
+            max-width: 46rem;
           }
 
           /* ── Section ── */
